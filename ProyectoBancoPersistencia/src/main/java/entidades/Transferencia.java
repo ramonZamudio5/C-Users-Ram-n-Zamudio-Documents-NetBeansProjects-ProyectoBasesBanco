@@ -14,13 +14,17 @@ public class Transferencia {
     private int id;
     private Date fecha;
     private Double monto;
+    private int idOrigen;
+    private int idDestino;
 
     public Transferencia() {
     }
 
-    public Transferencia(Date fecha, Double monto) {
+    public Transferencia(Date fecha, Double monto, int idOrigen, int idDestino) {
         this.fecha = fecha;
         this.monto = monto;
+        this.idOrigen = idOrigen;
+        this.idDestino = idDestino;
     }
 
     public int getId() {
@@ -47,9 +51,27 @@ public class Transferencia {
         this.monto = monto;
     }
 
+    public int getIdOrigen() {
+        return idOrigen;
+    }
+
+    public void setIdOrigen(int idOrigen) {
+        this.idOrigen = idOrigen;
+    }
+
+    public int getIdDestino() {
+        return idDestino;
+    }
+
+    public void setIdDestino(int idDestino) {
+        this.idDestino = idDestino;
+    }
+
     @Override
     public String toString() {
-        return "Transferencia{" + "id=" + id + ", fecha=" + fecha + ", monto=" + monto + '}';
+        return "Transferencia{" + "id=" + id + ", fecha=" + fecha + ", monto=" + monto + ", idOrigen=" + idOrigen + ", idDestino=" + idDestino + '}';
     }
+
+
     
 }

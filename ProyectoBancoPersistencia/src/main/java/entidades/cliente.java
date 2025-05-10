@@ -4,14 +4,13 @@
  */
 package entidades;
 
-import enums.Estado;
 import java.sql.Date;
 
 /**
  *
  * @author Ramón Zamudio
  */
-public class cliente {
+public class Cliente {
     private int id;
     private String nombre;
     private String apellidoPaterno;
@@ -20,13 +19,14 @@ public class cliente {
     private String calle;
     private String ciudad;
     private String codigoPostal;
-    private Estado estado;
+    private String estado;
     private Date fechaNacimiento;
+    private int edad;
 
-    public cliente() {
+    public Cliente() {
     }
 
-    public cliente(String nombre, String apellidoPaterno, String apellidoMaterno, String colonia, String calle, String ciudad, String codigoPostal, Estado estado, Date fechaNacimiento) {
+    public Cliente(String nombre, String apellidoPaterno, String apellidoMaterno, String colonia, String calle, String ciudad, String codigoPostal, String estado, Date fechaNacimiento ) {
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
@@ -37,6 +37,15 @@ public class cliente {
         this.estado = estado;
         this.fechaNacimiento = fechaNacimiento;
     }
+
+    public int getEdad() {
+        return edad;
+    }
+
+    public void setEdad(int edad) {
+        this.edad = edad;
+    }
+
 
     public int getId() {
         return id;
@@ -102,11 +111,11 @@ public class cliente {
         this.codigoPostal = codigoPostal;
     }
 
-    public Estado getEstado() {
+    public String getEstado() {
         return estado;
     }
 
-    public void setEstado(Estado estado) {
+    public void setEstado(String estado) {
         this.estado = estado;
     }
 
@@ -120,8 +129,10 @@ public class cliente {
 
     @Override
     public String toString() {
-        return "cliente{" + "id=" + id + ", nombre=" + nombre + ", apellidoPaterno=" + apellidoPaterno + ", apellidoMaterno=" + apellidoMaterno + ", colonia=" + colonia + ", calle=" + calle + ", ciudad=" + ciudad + ", codigoPostal=" + codigoPostal + ", estado=" + estado + ", fechaNacimiento=" + fechaNacimiento + '}';
+        return "Cliente{" + "id=" + id + ", nombre=" + nombre + ", apellidoPaterno=" + apellidoPaterno + ", apellidoMaterno=" + apellidoMaterno + ", colonia=" + colonia + ", calle=" + calle + ", ciudad=" + ciudad + ", codigoPostal=" + codigoPostal + ", estado=" + estado + ", fechaNacimiento=" + fechaNacimiento + ", edad=" + edad + '}';
     }
+
+   
     
     
 }

@@ -15,16 +15,25 @@ public class RetiroSinCuenta {
     private Date fecha;
     private String contrasenia;
     private Double monto;
+    private int idCliente;
 
     public RetiroSinCuenta() {
     }
 
-    public RetiroSinCuenta(Date fecha, String contrasenia, Double monto) {
+    public RetiroSinCuenta(Date fecha, String contrasenia, Double monto, int idCliente) {
         this.fecha = fecha;
         this.contrasenia = contrasenia;
         this.monto = monto;
+        this.idCliente = idCliente;
     }
 
+    public RetiroSinCuenta(Date fecha, Double monto, int idCliente) {
+        this.fecha = fecha;
+        this.monto = monto;
+        this.idCliente = idCliente;
+    }
+    
+    
     public int getFolio() {
         return folio;
     }
@@ -57,9 +66,19 @@ public class RetiroSinCuenta {
         this.monto = monto;
     }
 
+    public int getIdCliente() {
+        return idCliente;
+    }
+
+    public void setIdCliente(int idCliente) {
+        this.idCliente = idCliente;
+    }
+
     @Override
     public String toString() {
-        return "RetiroSinCuenta{" + "folio=" + folio + ", fecha=" + fecha + ", contrasenia=" + contrasenia + ", monto=" + monto + '}';
+        return "RetiroSinCuenta{" + "folio=" + folio + ", fecha=" + fecha + ", contrasenia=" + contrasenia + ", monto=" + monto + ", idCliente=" + idCliente + '}';
     }
+
+
     
 }

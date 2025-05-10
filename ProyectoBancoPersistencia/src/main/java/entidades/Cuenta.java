@@ -14,13 +14,29 @@ import java.sql.Date;
 public class Cuenta {
     private int id;
     private Date fechaApertura;
-    private Double decimal;
+    private Double saldo;
     private EstadoCuenta estado;
+    private int idCliente;
 
     public Cuenta(Date fechaApertura, Double decimal, EstadoCuenta estado) {
         this.fechaApertura = fechaApertura;
-        this.decimal = decimal;
+        this.saldo = decimal;
         this.estado = estado;
+    }
+
+    public Cuenta(Date fechaApertura, Double decimal, EstadoCuenta estado, int idCliente) {
+        this.fechaApertura = fechaApertura;
+        this.saldo = decimal;
+        this.estado = estado;
+        this.idCliente = idCliente;
+    }
+
+    public int getIdCliente() {
+        return idCliente;
+    }
+
+    public void setIdCliente(int idCliente) {
+        this.idCliente = idCliente;
     }
 
     public Cuenta() {
@@ -42,12 +58,12 @@ public class Cuenta {
         this.fechaApertura = fechaApertura;
     }
 
-    public Double getDecimal() {
-        return decimal;
+    public Double getSaldo() {
+        return saldo;
     }
 
-    public void setDecimal(Double decimal) {
-        this.decimal = decimal;
+    public void setSaldo(Double decimal) {
+        this.saldo = decimal;
     }
 
     public EstadoCuenta getEstado() {
@@ -60,7 +76,7 @@ public class Cuenta {
 
     @Override
     public String toString() {
-        return "Cuenta{" + "id=" + id + ", fechaApertura=" + fechaApertura + ", decimal=" + decimal + ", estado=" + estado + '}';
+        return "Cuenta{" + "id=" + id + ", fechaApertura=" + fechaApertura + ", decimal=" + saldo + ", estado=" + estado + '}';
     }
     
     
