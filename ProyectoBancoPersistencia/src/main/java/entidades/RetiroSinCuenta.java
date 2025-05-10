@@ -10,25 +10,27 @@ import java.sql.Date;
  *
  * @author Ramón Zamudio
  */
-public class Transferencia {
-    private int id;
+public class RetiroSinCuenta {
+    private int folio;
     private Date fecha;
+    private String contrasenia;
     private Double monto;
 
-    public Transferencia() {
+    public RetiroSinCuenta() {
     }
 
-    public Transferencia(Date fecha, Double monto) {
+    public RetiroSinCuenta(Date fecha, String contrasenia, Double monto) {
         this.fecha = fecha;
+        this.contrasenia = contrasenia;
         this.monto = monto;
     }
 
-    public int getId() {
-        return id;
+    public int getFolio() {
+        return folio;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setFolio(int folio) {
+        this.folio = folio;
     }
 
     public Date getFecha() {
@@ -37,6 +39,14 @@ public class Transferencia {
 
     public void setFecha(Date fecha) {
         this.fecha = fecha;
+    }
+
+    public String getContrasenia() {
+        return contrasenia;
+    }
+
+    public void setContrasenia(String contrasenia) {
+        this.contrasenia = contrasenia;
     }
 
     public Double getMonto() {
@@ -49,7 +59,7 @@ public class Transferencia {
 
     @Override
     public String toString() {
-        return "Transferencia{" + "id=" + id + ", fecha=" + fecha + ", monto=" + monto + '}';
+        return "RetiroSinCuenta{" + "folio=" + folio + ", fecha=" + fecha + ", contrasenia=" + contrasenia + ", monto=" + monto + '}';
     }
     
 }
