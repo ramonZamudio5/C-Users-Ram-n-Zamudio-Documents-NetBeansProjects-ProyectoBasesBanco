@@ -4,6 +4,7 @@
  */
 package daos;
 
+import Interfaces.ICuentaDAO;
 import conexion.IConexion;
 import entidades.Cuenta;
 import enums.EstadoCuenta;
@@ -20,14 +21,15 @@ import java.util.List;
  *
  * @author Ramón Zamudio
  */
-public class CuentaDAO {
+public class CuentaDAO implements ICuentaDAO{
     IConexion conexion;
 
     public CuentaDAO(IConexion conexion) {
         this.conexion = conexion;
     }
 
-    public Cuenta agregarCuenta(Cuenta cuenta) throws PersistenciaException, SQLException {
+    @Override
+    public Cuenta agregarCuenta(Cuenta cuenta) throws PersistenciaException {
         String consultaSQL = "INSERT INTO Cuenta(fecha_apertura, saldo, estado, id_cliente) VALUES (?, ?, ?, ?)";
         try (Connection con = conexion.crearConexion();
              PreparedStatement ps = con.prepareStatement(consultaSQL, Statement.RETURN_GENERATED_KEYS)) {
@@ -56,6 +58,7 @@ public class CuentaDAO {
         }
     }
     
+    @Override
     public Cuenta consultarCuentaPorId(int id) throws PersistenciaException {
         String consultaSQL = "SELECT * FROM Cuenta WHERE id_cuenta = ?";
         try (Connection con = conexion.crearConexion();
@@ -81,6 +84,7 @@ public class CuentaDAO {
         return null;
     }
     
+    @Override
     public List<Cuenta> obtenerTodasLasCuentas() throws PersistenciaException {
         String consultaSQL = "SELECT * FROM Cuenta";
         List<Cuenta> cuentas = new ArrayList<>();
@@ -107,6 +111,7 @@ public class CuentaDAO {
         return cuentas;
     }
     
+    @Override
     public boolean editarEstadoCuenta(int idCuenta, EstadoCuenta nuevoEstado) throws PersistenciaException {
         String consultaSQL = "UPDATE Cuenta SET estado = ? WHERE id_cuenta = ?";
         try (Connection con = conexion.crearConexion();

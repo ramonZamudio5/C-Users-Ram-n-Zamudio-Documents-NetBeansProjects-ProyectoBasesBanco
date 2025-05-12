@@ -11,4 +11,5 @@
         <maven.compiler.target>19</maven.compiler.target>
         <exec.mainClass>com.mycompany.proyectobasespresentacion.ProyectoBasesPresentacion</exec.mainClass>
     </properties>
+    <name>ProyectoBancoPresentacion</name>
 </project>

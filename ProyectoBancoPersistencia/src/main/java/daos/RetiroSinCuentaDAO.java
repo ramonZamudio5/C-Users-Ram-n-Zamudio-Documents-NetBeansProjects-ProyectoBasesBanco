@@ -4,6 +4,7 @@
  */
 package daos;
 
+import Interfaces.IRetiroSinCuentaDAO;
 import conexion.IConexion;
 import entidades.RetiroSinCuenta;
 import exception.PersistenciaException;
@@ -18,13 +19,14 @@ import java.sql.SQLException;
  *
  * @author Ramón Zamudio
  */
-public class RetiroSinCuentaDAO {
+public class RetiroSinCuentaDAO implements IRetiroSinCuentaDAO{
     IConexion conexion;
 
     public RetiroSinCuentaDAO(IConexion conexion) {
         this.conexion = conexion;
     }
 
+    @Override
     public RetiroSinCuenta agregarRetiroSinCuenta(RetiroSinCuenta retiro) throws PersistenciaException {
         int folioGenerado = generarFolioAleatorio();
         String contraseniaGenerada = generarContraseniaAleatoria();
@@ -33,7 +35,6 @@ public class RetiroSinCuentaDAO {
         Integer idCuenta = obtenerCuentaConSaldoSuficiente(retiro.getIdCliente(), retiro.getMonto());
 
         if (idCuenta != null) {
-            // No actualices el saldo aquí, solo crea el retiro
             insertarRetiroSinCuenta(retiro);
             return retiro;
         } else {
@@ -68,7 +69,6 @@ public class RetiroSinCuentaDAO {
 
             ps.setInt(1, retiro.getFolio());
             ps.setDate(2, new java.sql.Date(retiro.getFecha().getTime()));
-            // Encriptar la contraseña antes de insertarla
             String contraseniaEncriptada = encriptarSHA256(retiro.getContrasenia());
             ps.setString(3, contraseniaEncriptada);
             ps.setDouble(4, retiro.getMonto());
@@ -79,6 +79,7 @@ public class RetiroSinCuentaDAO {
         }
     }
 
+    @Override
     public RetiroSinCuenta solicitarRetiro(int folio, String contrasenia) throws PersistenciaException {
         String consultaSQL = "SELECT * FROM RetiroSinCuenta WHERE folio = ?";
 
@@ -89,12 +90,9 @@ public class RetiroSinCuentaDAO {
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                // Obtener la contraseña almacenada en la base de datos
                 String contraseniaAlmacenada = rs.getString("contrasenia");
 
-                // Comprobar si la contraseña proporcionada es correcta
                 if (encriptarSHA256(contrasenia).equals(contraseniaAlmacenada)) {
-                    // Si la contraseña es correcta, devolver el objeto RetiroSinCuenta
                     RetiroSinCuenta retiro = new RetiroSinCuenta();
                     retiro.setFolio(rs.getInt("folio"));
                     retiro.setFecha(rs.getDate("fecha"));
@@ -113,13 +111,14 @@ public class RetiroSinCuentaDAO {
         }
     }
 
-    public void realizarRetiro(int folio, String contrasenia, double monto) throws PersistenciaException {
+    @Override
+    public boolean realizarRetiro(int folio, String contrasenia, double monto) throws PersistenciaException {
         RetiroSinCuenta retiro = solicitarRetiro(folio, contrasenia);
         if (retiro != null) {
             Integer idCuenta = obtenerCuentaConSaldoSuficiente(retiro.getIdCliente(), monto);
             if (idCuenta != null) {
-                // Actualiza el saldo solo aquí, después de validar el retiro
                 actualizarSaldoCuenta(idCuenta, -monto); 
+                return true;
             } else {
                 throw new PersistenciaException("Saldo insuficiente en la cuenta para realizar el retiro.");
             }

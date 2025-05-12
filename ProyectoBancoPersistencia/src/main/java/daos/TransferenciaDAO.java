@@ -4,6 +4,7 @@
  */
 package daos;
 
+import Interfaces.ITransferenciaDAO;
 import conexion.IConexion;
 import entidades.Transferencia;
 import exception.PersistenciaException;
@@ -16,13 +17,14 @@ import java.sql.SQLException;
  *
  * @author Ramón Zamudio
  */
-public class TransferenciaDAO {
+public class TransferenciaDAO implements ITransferenciaDAO{
     IConexion conexion;
 
     public TransferenciaDAO(IConexion conexion) {
         this.conexion = conexion;
     }
 
+    @Override
     public Transferencia realizarTransferencia(Transferencia transferencia) throws PersistenciaException {
         if (verificarSaldoCuenta(transferencia.getIdOrigen(), transferencia.getMonto())) {
             actualizarSaldoCuenta(transferencia.getIdOrigen(), -transferencia.getMonto());

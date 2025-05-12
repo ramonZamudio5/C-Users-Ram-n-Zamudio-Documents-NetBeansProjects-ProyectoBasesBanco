@@ -4,6 +4,7 @@
  */
 package daos;
 
+import Interfaces.IClienteDAO;
 import conexion.IConexion;
 import entidades.Cliente;
 import exception.PersistenciaException;
@@ -19,13 +20,14 @@ import java.util.List;
  *
  * @author Ramón Zamudio
  */
-public class ClienteDAO {
+public class ClienteDAO implements IClienteDAO{
     IConexion conexion;
 
     public ClienteDAO(IConexion conexion) {
         this.conexion = conexion;
     }
     
+    @Override
     public Cliente agregarCliente(Cliente cliente) throws PersistenciaException{
         String consultaSQL = "insert into cliente(nombre, apellidoMaterno, apellidoPaterno, calle, colonia, codigoPostal, estado, ciudad, fecha_nacimiento)values(?,?,?,?,?,?,?,?,?)";
         try(Connection con = conexion.crearConexion();
@@ -56,6 +58,7 @@ public class ClienteDAO {
         }       
     }
     
+    @Override
     public List<Cliente> obtenerTodosLosClientes() throws PersistenciaException {
         String consultaSQL = "SELECT id_cliente, nombre, apellidoPaterno, apellidoMaterno, calle, colonia, codigoPostal, estado, ciudad, fecha_nacimiento, TIMESTAMPDIFF(YEAR, fecha_nacimiento, CURDATE()) AS edad FROM cliente";
         List<Cliente> clientes = new ArrayList<>();
@@ -76,7 +79,7 @@ public class ClienteDAO {
                 cliente.setEstado(rs.getString("estado"));
                 cliente.setCiudad(rs.getString("ciudad"));
                 cliente.setFechaNacimiento(rs.getDate("fecha_nacimiento"));
-                cliente.setEdad(rs.getInt("edad")); // Asignar la edad calculada
+                cliente.setEdad(rs.getInt("edad"));
 
                 clientes.add(cliente);
             }
@@ -88,6 +91,7 @@ public class ClienteDAO {
         return clientes;
     }
 
+    @Override
     public Cliente obtenerClientePorId(int idCliente) throws PersistenciaException {
         String consultaSQL = "SELECT id_cliente, nombre, apellidoPaterno, apellidoMaterno, calle, colonia, codigoPostal, estado, ciudad, fecha_nacimiento, TIMESTAMPDIFF(YEAR, fecha_nacimiento, CURDATE()) AS edad FROM cliente WHERE id_cliente = ?";
         Cliente cliente = null;
@@ -95,7 +99,7 @@ public class ClienteDAO {
         try (Connection con = conexion.crearConexion();
              PreparedStatement ps = con.prepareStatement(consultaSQL)) {
 
-            ps.setInt(1, idCliente);  // Asignar el parámetro id_cliente
+            ps.setInt(1, idCliente); 
 
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
@@ -110,7 +114,7 @@ public class ClienteDAO {
                     cliente.setEstado(rs.getString("estado"));
                     cliente.setCiudad(rs.getString("ciudad"));
                     cliente.setFechaNacimiento(rs.getDate("fecha_nacimiento"));
-                    cliente.setEdad(rs.getInt("edad"));  // Establecer la edad calculada desde la consulta SQL
+                    cliente.setEdad(rs.getInt("edad")); 
                 }
 
             } catch (SQLException e) {
