@@ -4,10 +4,14 @@
  */
 package Interfaces;
 
+import entidades.Transferencia;
+import exception.PersistenciaException;
+
 /**
  *
  * @author Ramón Zamudio
  */
 public interface ITransferenciaDAO {
+    public Transferencia realizarTransferencia(Transferencia transferencia) throws PersistenciaException;
     
 }
