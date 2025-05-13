@@ -18,6 +18,7 @@ import interfaces.IRetiroSinCuentaBO;
 import interfaces.ITransferenciaBO;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Month;
 
 /*
@@ -38,24 +39,24 @@ public class NewMain {
         try{
             IConexion conexion = new Conexion();
             IClienteBO clienteBO = new ClienteBO(conexion);
-//            ClienteDTO cliente = new ClienteDTO("rradduñ", "xamudio", "dddd", "las flores", "orion", "ciudad", "85150", "sonora", 
-//                  new Date(105, 10, 5));
-//            System.out.println(clienteBO.agregarCliente(cliente));
-//            System.out.println(clienteBO.obtenerClientePorId(1));
-//            System.out.println(clienteBO.obtenerTodosLosClientes());
+            ClienteDTO cliente = new ClienteDTO("rradduñ", "xamudio", "dddd", "las flores", "orion", "ciudad", "85150", "sonora", 
+                  new Date(105, 10, 5));
+            System.out.println(clienteBO.agregarCliente(cliente));
+            System.out.println(clienteBO.obtenerClientePorId(1));
+            System.out.println(clienteBO.obtenerTodosLosClientes());
             ICuentaBO cuentaBO = new CuentaBO(conexion);
-//            CuentaDTO cuenta = new CuentaDTO(new Date(115, 10, 5), 1500.0, EstadoCuenta.ACTIVA, 5);
-//            cuentaBO.agregarCuenta(cuenta);
-//            System.out.println(cuentaBO.consultarCuentaPorId(2));
+            CuentaDTO cuenta = new CuentaDTO(new Date(115, 10, 5), 1500.0, EstadoCuenta.ACTIVA, 2);
+            cuentaBO.agregarCuenta(cuenta);
+            System.out.println(cuentaBO.consultarCuentaPorId(1));
 //            System.out.println(cuentaBO.editarEstadoCuenta(1, EstadoCuenta.ACTIVA));
-//            System.out.println(cuentaBO.obtenerTodasLasCuentas());
+            System.out.println(cuentaBO.obtenerTodasLasCuentas());
             IRetiroSinCuentaBO retiroSinCuentaBO = new RetiroSinCuentaBO(conexion);
-//            RetiroSinCuentaDTO retiro = new RetiroSinCuentaDTO(Date.valueOf(LocalDate.of(2025, Month.APRIL, 12)), 3900.0, 1);
-//            System.out.println(retiroSinCuentaBO.agregarRetiroSinCuenta(retiro));
-//           System.out.println(retiroSinCuentaBO.verificarDatos(25913, "91610699"));
-//            System.out.println(retiroSinCuentaBO.realizarRetiro(25913, "91610699", 999.0));
+            RetiroSinCuentaDTO retiro = new RetiroSinCuentaDTO(LocalDateTime.now(), 10.0, 1);
+            System.out.println(retiroSinCuentaBO.agregarRetiroSinCuenta(retiro));
+           System.out.println(retiroSinCuentaBO.verificarDatos(633450, "23446940"));
+            System.out.println(retiroSinCuentaBO.realizarRetiro(633450, "23446940", 10.0));
             ITransferenciaBO transferenciaBO = new TransferenciaBO(conexion);
-            TransferenciaDTO transferencia = new TransferenciaDTO(Date.valueOf(LocalDate.of(2025, Month.APRIL, 12)), 1500.0, 2, 1);
+            TransferenciaDTO transferencia = new TransferenciaDTO(LocalDateTime.now(), 1500.0, 2, 1);
             transferenciaBO.realizarTransferencia(transferencia);
             
         }catch(NegocioException e){

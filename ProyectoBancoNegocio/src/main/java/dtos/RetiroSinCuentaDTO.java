@@ -4,7 +4,7 @@
  */
 package dtos;
 
-import java.sql.Date;
+import java.time.LocalDateTime;
 
 /**
  *
@@ -12,12 +12,12 @@ import java.sql.Date;
  */
 public class RetiroSinCuentaDTO {
     private int folio;
-    private Date fecha;
+    private LocalDateTime fecha;
     private String contrasenia;
     private Double monto;
     private int idCliente;
 
-    public RetiroSinCuentaDTO(int folio, Date fecha, String contrasenia, Double monto, int idCliente) {
+    public RetiroSinCuentaDTO(int folio, LocalDateTime fecha, String contrasenia, Double monto, int idCliente) {
         this.folio = folio;
         this.fecha = fecha;
         this.contrasenia = contrasenia;
@@ -25,7 +25,7 @@ public class RetiroSinCuentaDTO {
         this.idCliente = idCliente;
     }
 
-    public RetiroSinCuentaDTO(Date fecha, Double monto, int idCliente) {
+    public RetiroSinCuentaDTO(LocalDateTime fecha, Double monto, int idCliente) {
         this.fecha = fecha;
         this.monto = monto;
         this.idCliente = idCliente;
@@ -39,11 +39,11 @@ public class RetiroSinCuentaDTO {
         this.folio = folio;
     }
 
-    public Date getFecha() {
+    public LocalDateTime getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(LocalDateTime fecha) {
         this.fecha = fecha;
     }
 

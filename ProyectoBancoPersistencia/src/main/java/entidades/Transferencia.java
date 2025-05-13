@@ -4,7 +4,7 @@
  */
 package entidades;
 
-import java.sql.Date;
+import java.time.LocalDateTime;
 
 /**
  *
@@ -12,7 +12,7 @@ import java.sql.Date;
  */
 public class Transferencia {
     private int id;
-    private Date fecha;
+    private LocalDateTime fecha;
     private Double monto;
     private int idOrigen;
     private int idDestino;
@@ -20,7 +20,7 @@ public class Transferencia {
     public Transferencia() {
     }
 
-    public Transferencia(Date fecha, Double monto, int idOrigen, int idDestino) {
+    public Transferencia(LocalDateTime fecha, Double monto, int idOrigen, int idDestino) {
         this.fecha = fecha;
         this.monto = monto;
         this.idOrigen = idOrigen;
@@ -35,11 +35,11 @@ public class Transferencia {
         this.id = id;
     }
 
-    public Date getFecha() {
+    public LocalDateTime getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(LocalDateTime fecha) {
         this.fecha = fecha;
     }
 

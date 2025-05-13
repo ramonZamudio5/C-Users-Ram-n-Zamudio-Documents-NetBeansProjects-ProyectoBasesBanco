@@ -4,7 +4,7 @@
  */
 package entidades;
 
-import java.sql.Date;
+import java.time.LocalDateTime;
 
 /**
  *
@@ -12,7 +12,7 @@ import java.sql.Date;
  */
 public class RetiroSinCuenta {
     private int folio;
-    private Date fecha;
+    private LocalDateTime fecha;
     private String contrasenia;
     private Double monto;
     private int idCliente;
@@ -20,14 +20,14 @@ public class RetiroSinCuenta {
     public RetiroSinCuenta() {
     }
 
-    public RetiroSinCuenta(Date fecha, String contrasenia, Double monto, int idCliente) {
+    public RetiroSinCuenta(LocalDateTime fecha, String contrasenia, Double monto, int idCliente) {
         this.fecha = fecha;
         this.contrasenia = contrasenia;
         this.monto = monto;
         this.idCliente = idCliente;
     }
 
-    public RetiroSinCuenta(Date fecha, Double monto, int idCliente) {
+    public RetiroSinCuenta(LocalDateTime fecha, Double monto, int idCliente) {
         this.fecha = fecha;
         this.monto = monto;
         this.idCliente = idCliente;
@@ -42,11 +42,11 @@ public class RetiroSinCuenta {
         this.folio = folio;
     }
 
-    public Date getFecha() {
+    public LocalDateTime getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(LocalDateTime fecha) {
         this.fecha = fecha;
     }
 

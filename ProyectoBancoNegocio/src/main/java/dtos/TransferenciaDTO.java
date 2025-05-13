@@ -4,7 +4,7 @@
  */
 package dtos;
 
-import java.sql.Date;
+import java.time.LocalDateTime;
 
 /**
  *
@@ -12,12 +12,12 @@ import java.sql.Date;
  */
 public class TransferenciaDTO {
     private int id;
-    private Date fecha;
+    private LocalDateTime fecha;
     private Double monto;
     private int idOrigen;
     private int idDestino;
 
-    public TransferenciaDTO(int id, Date fecha, Double monto, int idOrigen, int idDestino) {
+    public TransferenciaDTO(int id, LocalDateTime fecha, Double monto, int idOrigen, int idDestino) {
         this.id = id;
         this.fecha = fecha;
         this.monto = monto;
@@ -25,7 +25,7 @@ public class TransferenciaDTO {
         this.idDestino = idDestino;
     }
 
-    public TransferenciaDTO(Date fecha, Double monto, int idOrigen, int idDestino) {
+    public TransferenciaDTO(LocalDateTime fecha, Double monto, int idOrigen, int idDestino) {
         this.fecha = fecha;
         this.monto = monto;
         this.idOrigen = idOrigen;
@@ -41,11 +41,11 @@ public class TransferenciaDTO {
         this.id = id;
     }
 
-    public Date getFecha() {
+    public LocalDateTime getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(LocalDateTime fecha) {
         this.fecha = fecha;
     }
 

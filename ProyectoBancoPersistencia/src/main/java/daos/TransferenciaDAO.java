@@ -12,6 +12,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 
 /**
  *
@@ -71,9 +72,9 @@ public class TransferenciaDAO implements ITransferenciaDAO{
     private void insertarTransferencia(Transferencia transferencia) throws PersistenciaException {
         String consultaSQL = "INSERT INTO Transferencia (fecha, monto, id_origen, id_destino) VALUES (?, ?, ?, ?)";
         try (Connection con = conexion.crearConexion();
-             PreparedStatement ps = con.prepareStatement(consultaSQL)) {
+            PreparedStatement ps = con.prepareStatement(consultaSQL)) {
 
-            ps.setDate(1, new java.sql.Date(transferencia.getFecha().getTime()));
+            ps.setTimestamp(1, Timestamp.valueOf(transferencia.getFecha()));
             ps.setDouble(2, transferencia.getMonto());
             ps.setInt(3, transferencia.getIdOrigen());
             ps.setInt(4, transferencia.getIdDestino());

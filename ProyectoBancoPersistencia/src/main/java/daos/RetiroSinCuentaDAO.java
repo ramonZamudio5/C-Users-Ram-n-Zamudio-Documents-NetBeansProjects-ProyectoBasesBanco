@@ -14,6 +14,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 
 /**
  *
@@ -68,7 +69,7 @@ public class RetiroSinCuentaDAO implements IRetiroSinCuentaDAO{
              PreparedStatement ps = con.prepareStatement(consultaSQL)) {
 
             ps.setInt(1, retiro.getFolio());
-            ps.setDate(2, new java.sql.Date(retiro.getFecha().getTime()));
+            ps.setTimestamp(2, Timestamp.valueOf(retiro.getFecha()));
             String contraseniaEncriptada = encriptarSHA256(retiro.getContrasenia());
             ps.setString(3, contraseniaEncriptada);
             ps.setDouble(4, retiro.getMonto());
@@ -95,10 +96,17 @@ public class RetiroSinCuentaDAO implements IRetiroSinCuentaDAO{
                 if (encriptarSHA256(contrasenia).equals(contraseniaAlmacenada)) {
                     RetiroSinCuenta retiro = new RetiroSinCuenta();
                     retiro.setFolio(rs.getInt("folio"));
-                    retiro.setFecha(rs.getDate("fecha"));
+
+                    // Convertimos Timestamp a LocalDateTime
+                    Timestamp timestamp = rs.getTimestamp("fecha");
+                    if (timestamp != null) {
+                        retiro.setFecha(timestamp.toLocalDateTime());
+                    }
+
                     retiro.setMonto(rs.getDouble("monto"));
                     retiro.setIdCliente(rs.getInt("id_cliente"));
-                    retiro.setContrasenia(rs.getString("contrasenia"));
+                    retiro.setContrasenia(contrasenia); // Mejor no devolver la contraseña encriptada
+
                     return retiro;
                 } else {
                     throw new PersistenciaException("Contraseña incorrecta.");

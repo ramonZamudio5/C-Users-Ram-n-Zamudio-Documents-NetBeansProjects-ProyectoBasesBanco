@@ -21,11 +21,28 @@ public class Cliente {
     private String codigoPostal;
     private String estado;
     private Date fechaNacimiento;
+    private int codigoUnico;
     private int edad;
 
     public Cliente() {
     }
 
+    public Cliente(int id, String nombre, String apellidoPaterno, String apellidoMaterno, String colonia, String calle, String ciudad, String codigoPostal, String estado, Date fechaNacimiento, int codigoUnico, int edad) {
+        this.id = id;
+        this.nombre = nombre;
+        this.apellidoPaterno = apellidoPaterno;
+        this.apellidoMaterno = apellidoMaterno;
+        this.colonia = colonia;
+        this.calle = calle;
+        this.ciudad = ciudad;
+        this.codigoPostal = codigoPostal;
+        this.estado = estado;
+        this.fechaNacimiento = fechaNacimiento;
+        this.codigoUnico = codigoUnico;
+        this.edad = edad;
+    }
+
+    
     public Cliente(String nombre, String apellidoPaterno, String apellidoMaterno, String colonia, String calle, String ciudad, String codigoPostal, String estado, Date fechaNacimiento ) {
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
@@ -127,10 +144,20 @@ public class Cliente {
         this.fechaNacimiento = fechaNacimiento;
     }
 
+    public int getCodigoUnico() {
+        return codigoUnico;
+    }
+
+    public void setCodigoUnico(int codigoUnico) {
+        this.codigoUnico = codigoUnico;
+    }
+
     @Override
     public String toString() {
-        return "Cliente{" + "id=" + id + ", nombre=" + nombre + ", apellidoPaterno=" + apellidoPaterno + ", apellidoMaterno=" + apellidoMaterno + ", colonia=" + colonia + ", calle=" + calle + ", ciudad=" + ciudad + ", codigoPostal=" + codigoPostal + ", estado=" + estado + ", fechaNacimiento=" + fechaNacimiento + ", edad=" + edad + '}';
+        return "Cliente{" + "id=" + id + ", nombre=" + nombre + ", apellidoPaterno=" + apellidoPaterno + ", apellidoMaterno=" + apellidoMaterno + ", colonia=" + colonia + ", calle=" + calle + ", ciudad=" + ciudad + ", codigoPostal=" + codigoPostal + ", estado=" + estado + ", fechaNacimiento=" + fechaNacimiento + ", codigoUnico=" + codigoUnico + ", edad=" + edad + '}';
     }
+
+    
 
    
     
