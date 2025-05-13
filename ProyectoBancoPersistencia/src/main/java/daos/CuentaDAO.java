@@ -6,6 +6,7 @@ package daos;
 
 import Interfaces.ICuentaDAO;
 import conexion.IConexion;
+import entidades.Cliente;
 import entidades.Cuenta;
 import enums.EstadoCuenta;
 import exception.PersistenciaException;
@@ -30,6 +31,10 @@ public class CuentaDAO implements ICuentaDAO{
 
     @Override
     public Cuenta agregarCuenta(Cuenta cuenta) throws PersistenciaException {
+        Cliente cliente = obtenerClientePorId(cuenta.getIdCliente());
+        if (cliente == null) {
+            throw new PersistenciaException("El cliente no existe.");
+        }
         String consultaSQL = "INSERT INTO Cuenta(fecha_apertura, saldo, estado, id_cliente) VALUES (?, ?, ?, ?)";
         try (Connection con = conexion.crearConexion();
              PreparedStatement ps = con.prepareStatement(consultaSQL, Statement.RETURN_GENERATED_KEYS)) {
@@ -130,5 +135,38 @@ public class CuentaDAO implements ICuentaDAO{
         }
     }
     
-    
+    public Cliente obtenerClientePorId(int idCliente) throws PersistenciaException {
+        String consultaSQL = "SELECT id_cliente, nombre, apellidoPaterno, apellidoMaterno, calle, colonia, codigoPostal, estado, ciudad, fecha_nacimiento, TIMESTAMPDIFF(YEAR, fecha_nacimiento, CURDATE()) AS edad FROM cliente WHERE id_cliente = ?";
+        Cliente cliente = null;
+
+        try (Connection con = conexion.crearConexion();
+             PreparedStatement ps = con.prepareStatement(consultaSQL)) {
+
+            ps.setInt(1, idCliente); 
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    cliente = new Cliente();
+                    cliente.setId(rs.getInt("id_cliente"));
+                    cliente.setNombre(rs.getString("nombre"));
+                    cliente.setApellidoPaterno(rs.getString("apellidoPaterno"));
+                    cliente.setApellidoMaterno(rs.getString("apellidoMaterno"));
+                    cliente.setCalle(rs.getString("calle"));
+                    cliente.setColonia(rs.getString("colonia"));
+                    cliente.setCodigoPostal(rs.getString("codigoPostal"));
+                    cliente.setEstado(rs.getString("estado"));
+                    cliente.setCiudad(rs.getString("ciudad"));
+                    cliente.setFechaNacimiento(rs.getDate("fecha_nacimiento"));
+                    cliente.setEdad(rs.getInt("edad")); 
+                }
+
+            } catch (SQLException e) {
+                throw new PersistenciaException("Error al consultar el cliente por ID", e);
+            }
+        } catch (SQLException e) {
+            throw new PersistenciaException("Error al preparar la consulta para obtener el cliente", e);
+        }
+
+        return cliente;
+    }
 }

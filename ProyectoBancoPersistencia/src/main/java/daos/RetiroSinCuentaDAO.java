@@ -80,7 +80,7 @@ public class RetiroSinCuentaDAO implements IRetiroSinCuentaDAO{
     }
 
     @Override
-    public RetiroSinCuenta solicitarRetiro(int folio, String contrasenia) throws PersistenciaException {
+    public RetiroSinCuenta verificarDatos(int folio, String contrasenia) throws PersistenciaException {
         String consultaSQL = "SELECT * FROM RetiroSinCuenta WHERE folio = ?";
 
         try (Connection con = conexion.crearConexion();
@@ -113,7 +113,7 @@ public class RetiroSinCuentaDAO implements IRetiroSinCuentaDAO{
 
     @Override
     public boolean realizarRetiro(int folio, String contrasenia, double monto) throws PersistenciaException {
-        RetiroSinCuenta retiro = solicitarRetiro(folio, contrasenia);
+        RetiroSinCuenta retiro = verificarDatos(folio, contrasenia);
         if (retiro != null) {
             Integer idCuenta = obtenerCuentaConSaldoSuficiente(retiro.getIdCliente(), monto);
             if (idCuenta != null) {

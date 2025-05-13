@@ -31,11 +31,11 @@ public class NewMain {
     public static void main(String[] args) throws PersistenciaException, SQLException {
         // TODO code application logic here
         IConexion conexion = new Conexion();
-//        ClienteDAO clienteDAO = new ClienteDAO(conexion);
-//        
-//        Cliente cliente = new Cliente("rauñ", "xamudio", "dddd", "las flores", "orion", "ciudad", "850150", "sonora", 
-//                new Date(112, 3, 11));
-//        clienteDAO.agregarCliente(cliente);
+        ClienteDAO clienteDAO = new ClienteDAO(conexion);
+        
+        Cliente cliente = new Cliente("rauñ", "xamudio", "dddd", "las flores", "orion", "ciudad", "850150", "sonora", 
+                new Date(112, 3, 11));
+        clienteDAO.agregarCliente(cliente);
 //        System.out.println(clienteDAO.obtenerClientePorId(1));
 //        System.out.println(clienteDAO.obtenerTodosLosClientes());
 //        
@@ -46,20 +46,21 @@ public class NewMain {
 //        System.out.println(cuentaDAO.obtenerTodasLasCuentas());
 //        System.out.println(cuentaDAO.editarEstadoCuenta(1, EstadoCuenta.CANCELADO));
 //        
-        RetiroSinCuentaDAO rscDAO = new RetiroSinCuentaDAO(conexion);
-//        RetiroSinCuenta retiro = new RetiroSinCuenta(new Date(112, 3, 11),  1.0, 1);
-//        rscDAO.agregarRetiroSinCuenta(retiro);
-        
-//        TransferenciaDAO transDAO = new TransferenciaDAO(conexion);
-//        Transferencia trans = new Transferencia(new Date(112, 3, 11), 4000.0, 1, 2);
-//        transDAO.realizarTransferencia(trans);
-        
-        RetiroSinCuenta retiro = new RetiroSinCuenta();
-        retiro.setFecha(new Date(112, 3, 11));
-        retiro.setMonto(10.0);
-        retiro.setIdCliente(1);
-        RetiroSinCuenta retiroGenerado = rscDAO.agregarRetiroSinCuenta(retiro);
-        rscDAO.realizarRetiro(retiroGenerado.getFolio(), retiroGenerado.getContrasenia(), 10.0);
+//        RetiroSinCuentaDAO rscDAO = new RetiroSinCuentaDAO(conexion);
+////        RetiroSinCuenta retiro = new RetiroSinCuenta(new Date(112, 3, 11),  1.0, 1);
+////        rscDAO.agregarRetiroSinCuenta(retiro);
+//        
+////        TransferenciaDAO transDAO = new TransferenciaDAO(conexion);
+////        Transferencia trans = new Transferencia(new Date(112, 3, 11), 4000.0, 1, 2);
+////        transDAO.realizarTransferencia(trans);
+//        
+//        RetiroSinCuenta retiro = new RetiroSinCuenta();
+//        retiro.setFecha(new Date(112, 3, 11));
+//        retiro.setMonto(10.0);
+//        retiro.setIdCliente(1);
+//        RetiroSinCuenta retiroGenerado = rscDAO.agregarRetiroSinCuenta(retiro);
+//        rscDAO.realizarRetiro(retiroGenerado.getFolio(), retiroGenerado.getContrasenia(), 10.0);
+//    }
     }
     
 }

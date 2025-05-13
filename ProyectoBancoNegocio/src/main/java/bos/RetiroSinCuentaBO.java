@@ -5,6 +5,8 @@
 package bos;
 
 import Interfaces.IRetiroSinCuentaDAO;
+import conexion.IConexion;
+import daos.RetiroSinCuentaDAO;
 import dtos.RetiroSinCuentaDTO;
 import entidades.RetiroSinCuenta;
 import excepciones.NegocioException;
@@ -19,12 +21,21 @@ import mappers.RetiroMapper;
 public class RetiroSinCuentaBO implements IRetiroSinCuentaBO{
     private IRetiroSinCuentaDAO retiroDAO;
 
-    public RetiroSinCuentaBO(IRetiroSinCuentaDAO retiroDAO) {
-        this.retiroDAO = retiroDAO;
+    public RetiroSinCuentaBO(IConexion conexion) {
+        this.retiroDAO = new RetiroSinCuentaDAO(conexion);
     }
     
     @Override
     public RetiroSinCuentaDTO agregarRetiroSinCuenta(RetiroSinCuentaDTO retiro) throws NegocioException{
+        if (retiro == null) {
+            throw new NegocioException("El retiro no puede ser nulo.");
+        }
+        if (retiro.getMonto() == null || retiro.getMonto() <= 0) {
+            throw new NegocioException("El monto debe ser mayor a 0.");
+        }
+        if (retiro.getIdCliente() <= 0) {
+            throw new NegocioException("ID de cliente inválido.");
+        }
         try{
             RetiroSinCuenta retiroAgregado = retiroDAO.agregarRetiroSinCuenta(RetiroMapper.toEntity(retiro));
             return RetiroMapper.toDTO(retiroAgregado);
@@ -33,9 +44,9 @@ public class RetiroSinCuentaBO implements IRetiroSinCuentaBO{
         }
     }
     @Override
-    public RetiroSinCuentaDTO solicitarRetiro(int folio, String contrasenia) throws NegocioException {
+    public RetiroSinCuentaDTO verificarDatos(int folio, String contrasenia) throws NegocioException {
         try{
-            RetiroSinCuenta retiroAgregado = retiroDAO.solicitarRetiro(folio, contrasenia);
+            RetiroSinCuenta retiroAgregado = retiroDAO.verificarDatos(folio, contrasenia);
             return RetiroMapper.toDTO(retiroAgregado);
         }catch(PersistenciaException e){
             throw new NegocioException("Error al solicitar el retiro", e);
@@ -43,6 +54,9 @@ public class RetiroSinCuentaBO implements IRetiroSinCuentaBO{
     }
     @Override
     public boolean realizarRetiro(int folio, String contrasenia, double monto) throws NegocioException{
+        if (contrasenia == null || contrasenia.length() != 8) {
+            throw new NegocioException("La contraseña debe contener 8 dígitos.");
+    }
         try{
             return retiroDAO.realizarRetiro(folio, contrasenia, monto);
         }catch(PersistenciaException e){

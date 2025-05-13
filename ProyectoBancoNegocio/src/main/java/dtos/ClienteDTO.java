@@ -23,7 +23,7 @@ public class ClienteDTO {
     private Date fechaNacimiento;
     private int edad;
 
-    public ClienteDTO(int id, String nombre, String apellidoPaterno, String apellidoMaterno, String colonia, String calle, String ciudad, String codigoPostal, String estado, Date fechaNacimiento) {
+    public ClienteDTO(int id, String nombre, String apellidoPaterno, String apellidoMaterno, String colonia, String calle, String ciudad, String codigoPostal, String estado, Date fechaNacimiento,int edad) {
         this.id = id;
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
@@ -34,6 +34,7 @@ public class ClienteDTO {
         this.codigoPostal = codigoPostal;
         this.estado = estado;
         this.fechaNacimiento = fechaNacimiento;
+        this.edad= edad;
     }
 
     public ClienteDTO(String nombre, String apellidoPaterno, String apellidoMaterno, String colonia, String calle, String ciudad, String codigoPostal, String estado, Date fechaNacimiento) {

@@ -5,13 +5,16 @@
 package bos;
 
 import Interfaces.ICuentaDAO;
+import conexion.IConexion;
+import daos.CuentaDAO;
 import dtos.CuentaDTO;
 import entidades.Cuenta;
 import enums.EstadoCuenta;
 import excepciones.NegocioException;
 import exception.PersistenciaException;
 import interfaces.ICuentaBO;
-import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
 import mappers.CuentaMapper;
 
@@ -22,13 +25,37 @@ import mappers.CuentaMapper;
 public class CuentaBO implements ICuentaBO{
     private ICuentaDAO cuentaDAO;
 
-    public CuentaBO(ICuentaDAO cuentaDAO) {
-        this.cuentaDAO = cuentaDAO;
+    public CuentaBO(IConexion conexion) {
+        this.cuentaDAO = new CuentaDAO(conexion);
     }
     @Override
-    public CuentaDTO agregarCuenta(Cuenta cuenta)throws NegocioException{
+    public CuentaDTO agregarCuenta(CuentaDTO cuenta)throws NegocioException{
+        if (cuenta == null) {
+        throw new NegocioException("La cuenta no puede ser nula.");
+        }
+
+        if (cuenta.getSaldo() == null || cuenta.getSaldo() < 0) {
+            throw new NegocioException("El saldo inicial no puede ser nulo ni negativo.");
+        }
+
+        if (cuenta.getFechaApertura() == null) {
+            throw new NegocioException("La fecha de apertura es obligatoria.");
+        }
+
+        LocalDate apertura = cuenta.getFechaApertura().toLocalDate();
+        if (apertura.isAfter(LocalDate.now())) {
+            throw new NegocioException("La fecha de apertura no puede ser futura.");
+        }
+
+        if (cuenta.getEstado() == null) {
+            throw new NegocioException("El estado de la cuenta es obligatorio.");
+        }
+
+        if (cuenta.getIdCliente() <= 0) {
+            throw new NegocioException("ID de cliente inválido.");
+        }
         try{
-            Cuenta cuentaAgregada = cuentaDAO.agregarCuenta(cuenta);
+            Cuenta cuentaAgregada = cuentaDAO.agregarCuenta(CuentaMapper.toEntity(cuenta));
             return CuentaMapper.toDTO(cuentaAgregada);
         }catch(PersistenciaException e){
             throw new NegocioException("Error al agregar la cuenta", e);
@@ -52,7 +79,18 @@ public class CuentaBO implements ICuentaBO{
     } 
     @Override
     public boolean editarEstadoCuenta(int idCuenta, EstadoCuenta nuevoEstado) throws NegocioException{
+        if (nuevoEstado == null) {
+            throw new NegocioException("El nuevo estado no puede ser nulo.");
+        }
         try{
+            Cuenta cuenta = cuentaDAO.consultarCuentaPorId(idCuenta);
+            if (cuenta == null) {
+                throw new NegocioException("La cuenta no existe.");
+            }
+
+            if (cuenta.getEstado() == nuevoEstado) {
+                throw new NegocioException("La cuenta ya tiene el estado especificado.");
+            }
             return cuentaDAO.editarEstadoCuenta(idCuenta, nuevoEstado);
         }catch(PersistenciaException e){
             throw new NegocioException("Error al editar estado de cuenta", e);

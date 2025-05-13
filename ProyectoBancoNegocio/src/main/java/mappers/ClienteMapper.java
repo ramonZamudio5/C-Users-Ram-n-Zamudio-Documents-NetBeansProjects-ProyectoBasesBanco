@@ -20,8 +20,8 @@ public class ClienteMapper {
     }
     
     public static ClienteDTO toDTO(Cliente cliente){
-        return new ClienteDTO(cliente.getNombre(), cliente.getApellidoPaterno(), cliente.getApellidoMaterno(), cliente.getColonia()
-                , cliente.getCalle(), cliente.getCiudad(), cliente.getCodigoPostal(), cliente.getEstado(), cliente.getFechaNacimiento());
+        return new ClienteDTO(cliente.getId(),cliente.getNombre(), cliente.getApellidoPaterno(), cliente.getApellidoMaterno(), cliente.getColonia()
+                , cliente.getCalle(), cliente.getCiudad(), cliente.getCodigoPostal(), cliente.getEstado(), cliente.getFechaNacimiento(),cliente.getEdad());
     }
     
     public static List<Cliente> listToEntity(List<ClienteDTO> clientes){

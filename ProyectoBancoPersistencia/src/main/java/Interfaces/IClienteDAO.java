@@ -6,6 +6,7 @@ package Interfaces;
 
 import entidades.Cliente;
 import exception.PersistenciaException;
+import java.sql.Date;
 import java.util.List;
 
 /**
@@ -16,5 +17,5 @@ public interface IClienteDAO {
     public Cliente agregarCliente(Cliente cliente) throws PersistenciaException;
     public List<Cliente> obtenerTodosLosClientes() throws PersistenciaException;
     public Cliente obtenerClientePorId(int idCliente) throws PersistenciaException;
-    
+    public boolean existeCliente(String nombre, String apellidoPaterno, String apellidoMaterno, Date fechaNacimiento) throws PersistenciaException;
 }

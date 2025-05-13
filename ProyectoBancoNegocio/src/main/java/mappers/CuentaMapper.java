@@ -19,7 +19,7 @@ public class CuentaMapper {
         return new Cuenta(cuenta.getFechaApertura(), cuenta.getSaldo(), cuenta.getEstado(),cuenta.getIdCliente());
     }
     public static CuentaDTO toDTO(Cuenta cuenta){
-        return new CuentaDTO(cuenta.getFechaApertura(), cuenta.getSaldo(), cuenta.getEstado(),cuenta.getIdCliente());
+        return new CuentaDTO(cuenta.getId(),cuenta.getFechaApertura(), cuenta.getSaldo(), cuenta.getEstado(),cuenta.getIdCliente());
     }
     public static List<Cuenta> listToEntity(List<CuentaDTO> cuentas){
         LinkedList<Cuenta> listaCuents = new LinkedList<>();

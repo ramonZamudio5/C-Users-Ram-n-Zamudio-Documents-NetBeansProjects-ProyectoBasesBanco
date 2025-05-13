@@ -9,6 +9,7 @@ import conexion.IConexion;
 import entidades.Cliente;
 import exception.PersistenciaException;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -127,6 +128,31 @@ public class ClienteDAO implements IClienteDAO{
         return cliente;
     }
     
+    @Override
+    public boolean existeCliente(String nombre, String apellidoPaterno, String apellidoMaterno, Date fechaNacimiento) throws PersistenciaException {
+        String sql = "SELECT COUNT(*) FROM cliente WHERE nombre = ? AND apellidoPaterno = ? AND apellidoMaterno = ? AND fecha_nacimiento = ?";
+
+        try (Connection con = conexion.crearConexion();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setString(1, nombre);
+            ps.setString(2, apellidoPaterno);
+            ps.setString(3, apellidoMaterno);
+            ps.setDate(4, new java.sql.Date(fechaNacimiento.getTime()));
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) > 0;
+                }
+            } catch (SQLException e) {
+                throw new PersistenciaException("Error al ejecutar la consulta de existencia del cliente", e);
+            }
+        } catch (SQLException e) {
+            throw new PersistenciaException("Error al preparar la consulta de existencia del cliente", e);
+        }
+
+        return false;
+    }
     
     
 }
