@@ -13,6 +13,5 @@ import excepciones.NegocioException;
  */
 public interface IRetiroSinCuentaBO {
     public RetiroSinCuentaDTO agregarRetiroSinCuenta(RetiroSinCuentaDTO retiro) throws NegocioException;
-    public RetiroSinCuentaDTO verificarDatos(int folio, String contrasenia) throws NegocioException;
     public boolean realizarRetiro(int folio, String contrasenia) throws NegocioException;
 }

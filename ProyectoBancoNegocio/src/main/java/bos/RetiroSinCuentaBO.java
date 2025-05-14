@@ -44,15 +44,6 @@ public class RetiroSinCuentaBO implements IRetiroSinCuentaBO{
         }
     }
     @Override
-    public RetiroSinCuentaDTO verificarDatos(int folio, String contrasenia) throws NegocioException {
-        try{
-            RetiroSinCuenta retiroAgregado = retiroDAO.verificarDatos(folio, contrasenia);
-            return RetiroMapper.toDTO(retiroAgregado);
-        }catch(PersistenciaException e){
-            throw new NegocioException("Error al solicitar el retiro", e);
-        }
-    }
-    @Override
     public boolean realizarRetiro(int folio, String contrasenia) throws NegocioException{
         if (contrasenia == null || contrasenia.length() != 8) {
             throw new NegocioException("La contraseña debe contener 8 dígitos.");

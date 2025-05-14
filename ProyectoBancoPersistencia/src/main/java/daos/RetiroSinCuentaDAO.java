@@ -78,8 +78,7 @@ public class RetiroSinCuentaDAO implements IRetiroSinCuentaDAO{
         }
     }
 
-    @Override
-    public RetiroSinCuenta verificarDatos(int folio, String contrasenia) throws PersistenciaException {
+    private RetiroSinCuenta verificarDatos(int folio, String contrasenia) throws PersistenciaException {
         String consultaSQL = "SELECT * FROM RetiroSinCuenta WHERE folio = ?";
 
         try (Connection con = conexion.crearConexion();

@@ -53,7 +53,6 @@ public class NewMain {
             IRetiroSinCuentaBO retiroSinCuentaBO = new RetiroSinCuentaBO(conexion);
 //            RetiroSinCuentaDTO retiro = new RetiroSinCuentaDTO(LocalDateTime.now(), 10.0, 1);
 //            System.out.println(retiroSinCuentaBO.agregarRetiroSinCuenta(retiro));
-//           System.out.println(retiroSinCuentaBO.verificarDatos(672630, "61521126"));
             System.out.println(retiroSinCuentaBO.realizarRetiro(511152, "49081656"));
 //            ITransferenciaBO transferenciaBO = new TransferenciaBO(conexion);
 //            TransferenciaDTO transferencia = new TransferenciaDTO(LocalDateTime.now(), 1500.0, 2, 1);
