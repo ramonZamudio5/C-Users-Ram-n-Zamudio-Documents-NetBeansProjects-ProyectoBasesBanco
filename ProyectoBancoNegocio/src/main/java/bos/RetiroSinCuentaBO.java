@@ -33,7 +33,7 @@ public class RetiroSinCuentaBO implements IRetiroSinCuentaBO{
         if (retiro.getMonto() == null || retiro.getMonto() <= 0) {
             throw new NegocioException("El monto debe ser mayor a 0.");
         }
-        if (retiro.getIdCliente() <= 0) {
+        if (retiro.getIdCuenta()<= 0) {
             throw new NegocioException("ID de cliente inválido.");
         }
         try{
@@ -53,12 +53,12 @@ public class RetiroSinCuentaBO implements IRetiroSinCuentaBO{
         }
     }
     @Override
-    public boolean realizarRetiro(int folio, String contrasenia, double monto) throws NegocioException{
+    public boolean realizarRetiro(int folio, String contrasenia) throws NegocioException{
         if (contrasenia == null || contrasenia.length() != 8) {
             throw new NegocioException("La contraseña debe contener 8 dígitos.");
     }
         try{
-            return retiroDAO.realizarRetiro(folio, contrasenia, monto);
+            return retiroDAO.realizarRetiro(folio, contrasenia);
         }catch(PersistenciaException e){
             throw new NegocioException("Error al realizar el retiro", e);
         }

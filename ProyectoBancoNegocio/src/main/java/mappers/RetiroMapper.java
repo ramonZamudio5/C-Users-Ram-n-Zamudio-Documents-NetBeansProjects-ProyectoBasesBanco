@@ -13,9 +13,9 @@ import entidades.RetiroSinCuenta;
  */
 public class RetiroMapper {
     public static RetiroSinCuenta toEntity(RetiroSinCuentaDTO retiro){
-        return new RetiroSinCuenta(retiro.getFecha(), retiro.getMonto(), retiro.getIdCliente());
+        return new RetiroSinCuenta(retiro.getFecha(), retiro.getMonto(), retiro.getIdCuenta());
     }
     public static RetiroSinCuentaDTO toDTO(RetiroSinCuenta retiro){
-        return new RetiroSinCuentaDTO(retiro.getFolio(),retiro.getFecha(),retiro.getContrasenia(), retiro.getMonto(), retiro.getIdCliente());
+        return new RetiroSinCuentaDTO(retiro.getFolio(),retiro.getFecha(),retiro.getContrasenia(), retiro.getMonto(), retiro.getIdCuenta());
     }
 }

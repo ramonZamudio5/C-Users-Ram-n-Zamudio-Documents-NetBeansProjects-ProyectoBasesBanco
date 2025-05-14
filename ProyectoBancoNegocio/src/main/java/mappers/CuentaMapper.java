@@ -6,7 +6,6 @@ package mappers;
 
 import dtos.CuentaDTO;
 import entidades.Cuenta;
-import enums.EstadoCuenta;
 import java.util.LinkedList;
 import java.util.List;
 

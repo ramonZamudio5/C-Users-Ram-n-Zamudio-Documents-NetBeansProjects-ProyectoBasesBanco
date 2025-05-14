@@ -14,7 +14,6 @@ import excepciones.NegocioException;
 import exception.PersistenciaException;
 import interfaces.ICuentaBO;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.List;
 import mappers.CuentaMapper;
 

@@ -22,6 +22,7 @@ public class ClienteDTO {
     private String estado;
     private Date fechaNacimiento;
     private int edad;
+    private int contrasenia;
 
     public ClienteDTO(int id, String nombre, String apellidoPaterno, String apellidoMaterno, String colonia, String calle, String ciudad, String codigoPostal, String estado, Date fechaNacimiento,int edad) {
         this.id = id;
@@ -137,10 +138,20 @@ public class ClienteDTO {
         this.edad = edad;
     }
 
+    public int getContrasenia() {
+        return contrasenia;
+    }
+
+    public void setContrasenia(int contrasenia) {
+        this.contrasenia = contrasenia;
+    }
+
     @Override
     public String toString() {
-        return "ClienteDTO{" + "id=" + id + ", nombre=" + nombre + ", apellidoPaterno=" + apellidoPaterno + ", apellidoMaterno=" + apellidoMaterno + ", colonia=" + colonia + ", calle=" + calle + ", ciudad=" + ciudad + ", codigoPostal=" + codigoPostal + ", estado=" + estado + ", fechaNacimiento=" + fechaNacimiento + ", edad=" + edad + '}';
+        return "ClienteDTO{" + "id=" + id + ", nombre=" + nombre + ", apellidoPaterno=" + apellidoPaterno + ", apellidoMaterno=" + apellidoMaterno + ", colonia=" + colonia + ", calle=" + calle + ", ciudad=" + ciudad + ", codigoPostal=" + codigoPostal + ", estado=" + estado + ", fechaNacimiento=" + fechaNacimiento + ", edad=" + edad + ", contrasenia=" + contrasenia + '}';
     }
+
+    
     
     
 }

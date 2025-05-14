@@ -14,5 +14,5 @@ import exception.PersistenciaException;
 public interface IRetiroSinCuentaDAO {
     public RetiroSinCuenta agregarRetiroSinCuenta(RetiroSinCuenta retiro) throws PersistenciaException;
     public RetiroSinCuenta verificarDatos(int folio, String contrasenia) throws PersistenciaException ;
-    public boolean realizarRetiro(int folio, String contrasenia, double monto) throws PersistenciaException;
+    public boolean realizarRetiro(int folio, String contrasenia) throws PersistenciaException;
 }

@@ -16,6 +16,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  *
@@ -29,10 +30,15 @@ public class ClienteDAO implements IClienteDAO{
     }
     
     @Override
-    public Cliente agregarCliente(Cliente cliente) throws PersistenciaException{
-        String consultaSQL = "insert into cliente(nombre, apellidoMaterno, apellidoPaterno, calle, colonia, codigoPostal, estado, ciudad, fecha_nacimiento)values(?,?,?,?,?,?,?,?,?)";
-        try(Connection con = conexion.crearConexion();
-                PreparedStatement ps = con.prepareStatement(consultaSQL,Statement.RETURN_GENERATED_KEYS)){
+    public Cliente agregarCliente(Cliente cliente) throws PersistenciaException {
+        int contraseniaGenerada = generarContraseniaAleatoria();
+        cliente.setContrasenia(contraseniaGenerada);
+
+        String consultaSQL = "INSERT INTO cliente(nombre, apellidoMaterno, apellidoPaterno, calle, colonia, codigoPostal, estado, ciudad, fecha_nacimiento, contrasenia) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        try (Connection con = conexion.crearConexion();
+             PreparedStatement ps = con.prepareStatement(consultaSQL, Statement.RETURN_GENERATED_KEYS)) {
+
             ps.setString(1, cliente.getNombre());
             ps.setString(2, cliente.getApellidoPaterno());
             ps.setString(3, cliente.getApellidoMaterno());
@@ -42,21 +48,31 @@ public class ClienteDAO implements IClienteDAO{
             ps.setString(7, cliente.getEstado());
             ps.setString(8, cliente.getCiudad());
             ps.setDate(9, cliente.getFechaNacimiento());
+            ps.setInt(10, contraseniaGenerada); 
+
             int filasAfectadas = ps.executeUpdate();
-            if(filasAfectadas == 0){
-                throw new PersistenciaException("la creacion de la consulta fallo no se inserto ninguna fila");
+            if (filasAfectadas == 0) {
+                throw new PersistenciaException("La creación del cliente falló, no se insertó ninguna fila");
             }
-            try(ResultSet generatedKeys = ps.getGeneratedKeys()){
-                if(generatedKeys.next()){
+
+            try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
                     cliente.setId(generatedKeys.getInt(1));
-                }else{
-                    throw new PersistenciaException("la creacion de la consulta fallo no se inserto ninguna fila");
+                } else {
+                    throw new PersistenciaException("La creación del cliente falló, no se obtuvo el ID generado");
                 }
             }
+
             return cliente;
-        }catch(SQLException e){
-            throw new PersistenciaException("la creacion del cliente fallo no se inserto ninguna fila",e);
-        }       
+        } catch (SQLException e) {
+            throw new PersistenciaException("La creación del cliente falló", e);
+        }
+    }
+    
+    private int generarContraseniaAleatoria() {
+        Random random = new Random();
+        int numero = 10000000 + random.nextInt(90000000);
+        return numero;
     }
     
     @Override

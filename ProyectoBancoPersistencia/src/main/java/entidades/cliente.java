@@ -21,13 +21,13 @@ public class Cliente {
     private String codigoPostal;
     private String estado;
     private Date fechaNacimiento;
-    private int codigoUnico;
     private int edad;
+    private int contrasenia;
 
     public Cliente() {
     }
 
-    public Cliente(int id, String nombre, String apellidoPaterno, String apellidoMaterno, String colonia, String calle, String ciudad, String codigoPostal, String estado, Date fechaNacimiento, int codigoUnico, int edad) {
+    public Cliente(int id, String nombre, String apellidoPaterno, String apellidoMaterno, String colonia, String calle, String ciudad, String codigoPostal, String estado, Date fechaNacimiento, int edad,int contrasenia) {
         this.id = id;
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
@@ -38,12 +38,12 @@ public class Cliente {
         this.codigoPostal = codigoPostal;
         this.estado = estado;
         this.fechaNacimiento = fechaNacimiento;
-        this.codigoUnico = codigoUnico;
         this.edad = edad;
+        this.contrasenia = contrasenia;
     }
 
     
-    public Cliente(String nombre, String apellidoPaterno, String apellidoMaterno, String colonia, String calle, String ciudad, String codigoPostal, String estado, Date fechaNacimiento ) {
+    public Cliente(String nombre, String apellidoPaterno, String apellidoMaterno, String colonia, String calle, String ciudad, String codigoPostal, String estado, Date fechaNacimiento) {
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
@@ -54,7 +54,7 @@ public class Cliente {
         this.estado = estado;
         this.fechaNacimiento = fechaNacimiento;
     }
-
+    
     public int getEdad() {
         return edad;
     }
@@ -144,18 +144,20 @@ public class Cliente {
         this.fechaNacimiento = fechaNacimiento;
     }
 
-    public int getCodigoUnico() {
-        return codigoUnico;
+    public int getContrasenia() {
+        return contrasenia;
     }
 
-    public void setCodigoUnico(int codigoUnico) {
-        this.codigoUnico = codigoUnico;
+    public void setContrasenia(int contrasenia) {
+        this.contrasenia = contrasenia;
     }
 
     @Override
     public String toString() {
-        return "Cliente{" + "id=" + id + ", nombre=" + nombre + ", apellidoPaterno=" + apellidoPaterno + ", apellidoMaterno=" + apellidoMaterno + ", colonia=" + colonia + ", calle=" + calle + ", ciudad=" + ciudad + ", codigoPostal=" + codigoPostal + ", estado=" + estado + ", fechaNacimiento=" + fechaNacimiento + ", codigoUnico=" + codigoUnico + ", edad=" + edad + '}';
+        return "Cliente{" + "id=" + id + ", nombre=" + nombre + ", apellidoPaterno=" + apellidoPaterno + ", apellidoMaterno=" + apellidoMaterno + ", colonia=" + colonia + ", calle=" + calle + ", ciudad=" + ciudad + ", codigoPostal=" + codigoPostal + ", estado=" + estado + ", fechaNacimiento=" + fechaNacimiento + ", edad=" + edad + ", contrasenia=" + contrasenia + '}';
     }
+
+
 
     
 

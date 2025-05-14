@@ -15,20 +15,20 @@ public class RetiroSinCuentaDTO {
     private LocalDateTime fecha;
     private String contrasenia;
     private Double monto;
-    private int idCliente;
+    private int idCuenta;
 
-    public RetiroSinCuentaDTO(int folio, LocalDateTime fecha, String contrasenia, Double monto, int idCliente) {
+    public RetiroSinCuentaDTO(int folio, LocalDateTime fecha, String contrasenia, Double monto, int idCuenta) {
         this.folio = folio;
         this.fecha = fecha;
         this.contrasenia = contrasenia;
         this.monto = monto;
-        this.idCliente = idCliente;
+        this.idCuenta = idCuenta;
     }
 
-    public RetiroSinCuentaDTO(LocalDateTime fecha, Double monto, int idCliente) {
+    public RetiroSinCuentaDTO(LocalDateTime fecha, Double monto, int idCuenta) {
         this.fecha = fecha;
         this.monto = monto;
-        this.idCliente = idCliente;
+        this.idCuenta = idCuenta;
     }
 
     public int getFolio() {
@@ -63,17 +63,17 @@ public class RetiroSinCuentaDTO {
         this.monto = monto;
     }
 
-    public int getIdCliente() {
-        return idCliente;
+    public int getIdCuenta() {
+        return idCuenta;
     }
 
-    public void setIdCliente(int idCliente) {
-        this.idCliente = idCliente;
+    public void setIdCuenta(int idCuenta) {
+        this.idCuenta = idCuenta;
     }
 
     @Override
     public String toString() {
-        return "RetiroSinCuentaDTO{" + "folio=" + folio + ", fecha=" + fecha + ", contrasenia=" + contrasenia + ", monto=" + monto + ", idCliente=" + idCliente + '}';
+        return "RetiroSinCuentaDTO{" + "folio=" + folio + ", fecha=" + fecha + ", contrasenia=" + contrasenia + ", monto=" + monto + ", idCuenta=" + idCuenta + '}';
     }
     
     
