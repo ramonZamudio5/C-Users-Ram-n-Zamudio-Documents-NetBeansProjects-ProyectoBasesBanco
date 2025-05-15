@@ -2,19 +2,20 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package interfaces;
+package presentacion;
 
 /**
  *
  * @author Ramón Zamudio
  */
 public class PantallaPrincipal extends javax.swing.JFrame {
-
+    private ControlNavegacion control;
     /**
      * Creates new form PantallaPrincipal
      */
-    public PantallaPrincipal() {
+    public PantallaPrincipal(ControlNavegacion control) {
         initComponents();
+        this.control = control;
     }
 
     /**
@@ -83,10 +84,14 @@ public class PantallaPrincipal extends javax.swing.JFrame {
 
     private void btnClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClienteActionPerformed
         // TODO add your handling code here:
+        control.openFormpantallaLogIn();
+        dispose();
     }//GEN-LAST:event_btnClienteActionPerformed
 
     private void btnNoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNoClienteActionPerformed
         // TODO add your handling code here:
+        control.openFormPantallaUsuarioSinCuenta();
+        dispose();
     }//GEN-LAST:event_btnNoClienteActionPerformed
 
     /**
@@ -119,7 +124,8 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new PantallaPrincipal().setVisible(true);
+                ControlNavegacion control = new ControlNavegacion();
+                new PantallaPrincipal(control).setVisible(true);
             }
         });
     }

@@ -47,7 +47,7 @@ public class RetiroSinCuentaBO implements IRetiroSinCuentaBO{
     public boolean realizarRetiro(int folio, String contrasenia) throws NegocioException{
         if (contrasenia == null || contrasenia.length() != 8) {
             throw new NegocioException("La contraseña debe contener 8 dígitos.");
-    }
+        }
         try{
             return retiroDAO.realizarRetiro(folio, contrasenia);
         }catch(PersistenciaException e){

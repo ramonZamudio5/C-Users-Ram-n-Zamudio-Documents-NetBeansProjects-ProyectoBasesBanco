@@ -69,9 +69,12 @@ public class CuentaBO implements ICuentaBO{
         }
     }
     @Override
-    public List<CuentaDTO> obtenerTodasLasCuentas() throws NegocioException{
+    public List<CuentaDTO> obtenerTodasLasCuentas(int idCliente) throws NegocioException{
+        if(idCliente <= 0){
+            throw new NegocioException("El id no puede ser menor a 0");
+        }
         try{
-            return CuentaMapper.listToDTO(cuentaDAO.obtenerTodasLasCuentas());
+            return CuentaMapper.listToDTO(cuentaDAO.obtenerTodasLasCuentas(idCliente));
         }catch(PersistenciaException e){
             throw new NegocioException("Error al consultar con la base de datos", e);
         }

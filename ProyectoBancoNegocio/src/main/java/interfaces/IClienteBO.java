@@ -16,4 +16,5 @@ public interface IClienteBO {
     public ClienteDTO agregarCliente(ClienteDTO cliente) throws NegocioException;
     public List<ClienteDTO> obtenerTodosLosClientes() throws NegocioException;
     public ClienteDTO obtenerClientePorId(int idCliente) throws NegocioException;
+    public boolean validarCliente(int id, int contrasenia) throws NegocioException; 
 }

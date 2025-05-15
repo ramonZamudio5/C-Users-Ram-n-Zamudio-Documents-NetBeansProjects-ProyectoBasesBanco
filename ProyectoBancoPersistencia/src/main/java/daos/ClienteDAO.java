@@ -170,5 +170,29 @@ public class ClienteDAO implements IClienteDAO{
         return false;
     }
     
+    @Override
+    public boolean validarCliente(int id, int contrasenia) throws PersistenciaException {
+        String sql = "SELECT COUNT(*) FROM cliente WHERE id_cliente = ? AND contrasenia = ?";
+
+        try (Connection con = conexion.crearConexion();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, id);
+            ps.setInt(2, contrasenia);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) > 0; 
+                }
+            } catch (SQLException e) {
+                throw new PersistenciaException("Error al ejecutar la consulta de validación del cliente", e);
+            }
+
+        } catch (SQLException e) {
+            throw new PersistenciaException("Error al preparar la consulta de validación del cliente", e);
+        }
+
+        return false;
+    }
     
 }

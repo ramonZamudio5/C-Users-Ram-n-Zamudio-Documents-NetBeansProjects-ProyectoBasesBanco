@@ -95,4 +95,14 @@ public class ClienteBO implements IClienteBO{
     private boolean esVacio(String valor) {
         return valor == null || valor.trim().isEmpty();
     }
+
+    @Override
+    public boolean validarCliente(int id, int contrasenia) throws NegocioException {
+        try{
+            return clienteDAO.validarCliente(id, contrasenia);
+        }catch(PersistenciaException e){
+            throw new NegocioException("Error al consultar con la base de datos", e);
+        }
+    }
+    
 }

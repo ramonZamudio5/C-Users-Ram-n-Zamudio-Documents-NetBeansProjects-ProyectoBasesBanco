@@ -120,9 +120,9 @@ public class RetiroSinCuentaDAO implements IRetiroSinCuentaDAO{
         try {
             if (retiro != null) {
                 Double monto = obtenerMontoPorFolio(folio); 
-                System.out.println(monto);
                 if (monto != null) {
-                    actualizarSaldoCuenta(retiro.getIdCuenta(), monto); 
+                    actualizarSaldoCuenta(retiro.getIdCuenta(), monto);
+                    System.out.println("funciono");
                     return true;
                 }
             }

@@ -12,4 +12,16 @@
         <exec.mainClass>com.mycompany.proyectobasespresentacion.ProyectoBasesPresentacion</exec.mainClass>
     </properties>
     <name>ProyectoBancoPresentacion</name>
+    <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>ProyectoBancoNegocio</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jdatepicker</groupId>
+            <artifactId>jdatepicker</artifactId>
+            <version>1.3.4</version>
+        </dependency>
+    </dependencies>
 </project>

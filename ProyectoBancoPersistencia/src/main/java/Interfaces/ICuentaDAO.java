@@ -17,6 +17,6 @@ import java.util.List;
 public interface ICuentaDAO {
     public Cuenta agregarCuenta(Cuenta cuenta) throws PersistenciaException;
     public Cuenta consultarCuentaPorId(int id) throws PersistenciaException;
-    public List<Cuenta> obtenerTodasLasCuentas() throws PersistenciaException ;
+    public List<Cuenta> obtenerTodasLasCuentas(int idCliente) throws PersistenciaException ;
     public boolean editarEstadoCuenta(int idCuenta, EstadoCuenta nuevoEstado) throws PersistenciaException;
 }
