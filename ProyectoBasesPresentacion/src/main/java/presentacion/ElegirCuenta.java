@@ -4,6 +4,23 @@
  */
 package presentacion;
 
+import dtos.CuentaDTO;
+import excepciones.PresentacionException;
+import exception.PersistenciaException;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 /**
  *
  * @author Ramón Zamudio
@@ -11,15 +28,70 @@ package presentacion;
 public class ElegirCuenta extends javax.swing.JFrame {
     ControlNavegacion control;
     String origen;
+    int idCliente;
+    JPanel jPanel1;
     /**
      * Creates new form ElegirCuenta
      * @param control
      * @param origen
+     * @param idCliente
      */
-    public ElegirCuenta(ControlNavegacion control, String origen) {
+    public ElegirCuenta(ControlNavegacion control, String origen,int idCliente) {
         initComponents();
         this.control = control;
         this.origen = origen;
+        this.idCliente = idCliente;
+        jPanel1 = new JPanel();
+        jPanel1.setLayout(new BoxLayout(jPanel1, BoxLayout.Y_AXIS));
+        jPanel1.setPreferredSize(new Dimension(350, 0));
+        jScrollPane1.setViewportView(jPanel1);
+        cargarLabels();
+        cargarScrollPane();
+    }
+    
+    public void cargarScrollPane(){
+        List<CuentaDTO> listaCuentas;
+        try {
+            listaCuentas = control.obtenerTodasLasCuentas(idCliente);
+            System.out.println("Cantidad de cuentas: " + listaCuentas.size());
+
+            for (CuentaDTO cuenta : listaCuentas) {
+                JPanel cuentaPanel = new JPanel();
+                cuentaPanel.setLayout(new BoxLayout(cuentaPanel, BoxLayout.Y_AXIS));
+                cuentaPanel.setPreferredSize(new Dimension(jPanel1.getWidth(), 60));
+                cuentaPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 60));
+                cuentaPanel.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+                cuentaPanel.setBackground(new Color(230, 230, 250));
+                cuentaPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+                JLabel lblNumeroCuenta = new JLabel("Cuenta Nº: " + cuenta.getId());
+                lblNumeroCuenta.setAlignmentX(Component.CENTER_ALIGNMENT);
+                JLabel lblSaldo = new JLabel("Saldo: $" + String.format("%.2f", cuenta.getSaldo()));
+                lblSaldo.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+                cuentaPanel.add(lblNumeroCuenta);
+                cuentaPanel.add(lblSaldo);
+                jPanel1.add(cuentaPanel);
+            }
+            jPanel1.setPreferredSize(new Dimension(jScrollPane1.getWidth(), listaCuentas.size() * 70));
+
+            jPanel1.revalidate();
+            jPanel1.repaint();
+        } catch (PresentacionException ex) {
+            Logger.getLogger(ElegirCuenta.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public void cargarLabels(){
+        switch(origen){
+            case "editar":
+                jLabel1.setText("Seleccione la cuenta que desea editar");
+                break;
+            case "retiro":
+                jLabel1.setText("Seleccione la cuenta de la cual desea hacer el retiro");
+                break;
+            case "transferencia":
+                jLabel1.setText("Seleccione la cuenta de la cual desea hacer la transferencia");
+                break;
+        }
     }
 
     /**
@@ -31,58 +103,42 @@ public class ElegirCuenta extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        jLabel1.setText("jLabel1");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 800, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(206, 206, 206)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 364, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addContainerGap(230, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 600, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(60, 60, 60)
+                .addComponent(jLabel1)
+                .addGap(71, 71, 71)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(48, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ElegirCuenta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ElegirCuenta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ElegirCuenta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ElegirCuenta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                ControlNavegacion control = new ControlNavegacion();
-                new ElegirCuenta(control, "editar").setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

@@ -9,14 +9,11 @@ import dtos.ClienteDTO;
 import dtos.CuentaDTO;
 import excepciones.NegocioException;
 import excepciones.PresentacionException;
-import exception.PersistenciaException;
 import interfaces.IClienteBO;
 import interfaces.ICuentaBO;
 import interfaces.IRetiroSinCuentaBO;
 import interfaces.ITransferenciaBO;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -51,11 +48,11 @@ public class ControlNavegacion {
     public void openFormpantallaLogIn(){
         new PantallaLogIn(this).setVisible(true);
     }
-    public void openFormSeleccionarAccionCuenta(){
-        new SeleccionarAccionCuenta(this).setVisible(true);
+    public void openFormSeleccionarAccionCuenta(int idCliente){
+        new SeleccionarAccionCuenta(this, idCliente).setVisible(true);
     }
-    public void ElegirCuenta(String origen){
-        new ElegirCuenta(this, origen).setVisible(true);
+    public void openFormElegirCuenta(String origen,int idCliente){
+        new ElegirCuenta(this, origen,idCliente).setVisible(true);
     }
     
     
@@ -90,11 +87,11 @@ public class ControlNavegacion {
         }
     }
     
-    public List<CuentaDTO> obtenerTodasLasCuentas(int idCliente) throws PersistenciaException{
+    public List<CuentaDTO> obtenerTodasLasCuentas(int idCliente) throws PresentacionException{
         try {
             return cuentaBO.obtenerTodasLasCuentas(idCliente);
         } catch (NegocioException ex) {
-            throw new PersistenciaException("error al obetner las cuentas del cliente con id: "+idCliente, ex);
+            throw new PresentacionException("error al obetner las cuentas del cliente con id: "+idCliente, ex);
         }
         
     }

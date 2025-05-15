@@ -10,12 +10,14 @@ package presentacion;
  */
 public class SeleccionarAccionCuenta extends javax.swing.JFrame {
     ControlNavegacion control;
+    int idCliente;
     /**
      * Creates new form SeleccionarAccionCuenta
      */
-    public SeleccionarAccionCuenta(ControlNavegacion control) {
+    public SeleccionarAccionCuenta(ControlNavegacion control, int idCliente) {
         initComponents();
         this.control = control;
+        this.idCliente = idCliente;
     }
 
     /**
@@ -38,10 +40,25 @@ public class SeleccionarAccionCuenta extends javax.swing.JFrame {
         jLabel1.setText("¡Bienvenido!");
 
         jButton1.setText("Realizar Transferencia");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Editar Estado De Cuenta");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Solicitar Retiro Sin Cuenta");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -76,6 +93,19 @@ public class SeleccionarAccionCuenta extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        control.openFormElegirCuenta("editar", idCliente);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

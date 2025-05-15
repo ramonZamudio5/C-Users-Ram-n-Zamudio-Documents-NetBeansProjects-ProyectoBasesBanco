@@ -139,13 +139,14 @@ public class PantallaLogIn extends javax.swing.JFrame {
         int contrasenia = Integer.parseInt(contraseniatxt.getText());
         try {
             control.validarCliente(id, contrasenia);
+            control.openFormSeleccionarAccionCuenta(id);
+            dispose();
         } catch (PresentacionException ex) {
             try {
                 throw new PresentacionException("Error al validar el cliente", ex);
             } catch (PresentacionException ex1) {
                 Logger.getLogger(PantallaLogIn.class.getName()).log(Level.SEVERE, null, ex1);
             }
-            dispose();
         }
     }//GEN-LAST:event_btnAceptarActionPerformed
 
