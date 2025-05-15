@@ -111,12 +111,15 @@ public class ElegirCuenta extends javax.swing.JFrame {
                             switch(origen){
                                 case "editar":
                                     control.openFormEditarEstado(cuenta.getId());
+                                    dispose();
                                     break;
                                 case "retiro":
                                     control.openFormSolicitarRetiro(cuenta.getId());
+                                    dispose();
                                     break;
                                 case "transferencia":
                                     control.openFormTransferencia(cuenta.getId());
+                                    dispose();
                                     break;
                             }
                         }

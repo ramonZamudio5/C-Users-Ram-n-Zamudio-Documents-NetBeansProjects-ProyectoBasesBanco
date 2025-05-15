@@ -22,8 +22,6 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -79,15 +77,9 @@ public class ControlNavegacion {
     public void openFormTransferencia(int idCuenta){
         new Transferencia(this, idCuenta).setVisible(true);
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    public void openFormCrearCuentaBanca(int idCliente){
+        new CrearCuentaBanca(this,idCliente).setVisible(true);
+    }
     public boolean realizarRetiro(int folio, String contrasenia)throws PresentacionException{
         try{
             return retiroSinCuentaBO.realizarRetiro(folio, contrasenia);
@@ -157,6 +149,14 @@ public class ControlNavegacion {
             return cuentaBO.obtenerTodasLasCuentasSinImporarEstado(idCliente);
         } catch (NegocioException ex) {
             throw new PresentacionException("Error al consultar las cuentas", ex);
+        }
+     }
+     
+     public CuentaDTO agregarCuenta(CuentaDTO cuenta) throws PresentacionException{
+        try {
+            return cuentaBO.agregarCuenta(cuenta);
+        } catch (NegocioException ex) {
+            throw new PresentacionException("Error al agregar la cuenta", ex);
         }
      }
     
@@ -449,6 +449,54 @@ public class ControlNavegacion {
         dialogo.add(panelBoton, BorderLayout.SOUTH);
         dialogo.setVisible(true);
     }
+    public void mostrarMensajeCrearCuentaBancaExitosa(int idCliente) {
+        JDialog dialogo = new JDialog();
+        dialogo.setTitle("Mensaje");
+        dialogo.setModal(true);
+        dialogo.setSize(300, 200);
+        dialogo.setLocationRelativeTo(null);
+        dialogo.setLayout(new BorderLayout());
+        JLabel mensaje = new JLabel("Creacion de cuenta Exitosa", SwingConstants.CENTER);
+        mensaje.setFont(new Font("Arial", Font.PLAIN, 18));
+        dialogo.add(mensaje, BorderLayout.CENTER);
+
+        JButton boton = new JButton("Regresar al menu");
+        boton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                openFormSeleccionarAccionCuenta(idCliente);
+                dialogo.dispose();
+            }
+        });
+
+        JPanel panelBoton = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        panelBoton.add(boton);
+        dialogo.add(panelBoton, BorderLayout.SOUTH);
+        dialogo.setVisible(true);
+    }
     
+    public void mostrarErrorCrearCuentaBanca() {
+        JDialog dialogo = new JDialog();
+        dialogo.setTitle("Error");
+        dialogo.setModal(true);
+        dialogo.setSize(300, 200);
+        dialogo.setLocationRelativeTo(null);
+        dialogo.setLayout(new BorderLayout());
+
+        JLabel mensaje = new JLabel("Error al crear la cuenta", SwingConstants.CENTER);
+        mensaje.setFont(new Font("Arial", Font.PLAIN, 16));
+        dialogo.add(mensaje, BorderLayout.CENTER);
+        JButton boton = new JButton("Aceptar");
+        boton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dialogo.dispose();
+            }
+        });
+        JPanel panelBoton = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        panelBoton.add(boton);
+        dialogo.add(panelBoton, BorderLayout.SOUTH);
+        dialogo.setVisible(true);
+    }
     
 }
