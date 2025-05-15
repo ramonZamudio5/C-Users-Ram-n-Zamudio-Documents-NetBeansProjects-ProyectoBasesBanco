@@ -4,9 +4,6 @@
  */
 package presentacion;
 
-import excepciones.PresentacionException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -39,6 +36,7 @@ public class PantallaLogIn extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         btnAceptar = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -67,14 +65,17 @@ public class PantallaLogIn extends javax.swing.JFrame {
             }
         });
 
+        jButton2.setText("Regresar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(351, 351, 351)
-                .addComponent(logInLabel)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(300, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -93,6 +94,15 @@ public class PantallaLogIn extends javax.swing.JFrame {
                             .addComponent(contraseniatxt, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(267, 267, 267))))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(351, 351, 351)
+                        .addComponent(logInLabel))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addComponent(jButton2)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                     .addContainerGap(301, Short.MAX_VALUE)
@@ -102,7 +112,9 @@ public class PantallaLogIn extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(67, 67, 67)
+                .addGap(32, 32, 32)
+                .addComponent(jButton2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(logInLabel)
                 .addGap(53, 53, 53)
                 .addComponent(idLabel)
@@ -135,20 +147,23 @@ public class PantallaLogIn extends javax.swing.JFrame {
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         // TODO add your handling code here:
-        int id = Integer.parseInt(idTxt.getText());
-        int contrasenia = Integer.parseInt(contraseniatxt.getText());
+        
         try {
+            int id = Integer.parseInt(idTxt.getText());
+            int contrasenia = Integer.parseInt(contraseniatxt.getText());
             control.validarCliente(id, contrasenia);
             control.openFormSeleccionarAccionCuenta(id);
             dispose();
-        } catch (PresentacionException ex) {
-            try {
-                throw new PresentacionException("Error al validar el cliente", ex);
-            } catch (PresentacionException ex1) {
-                Logger.getLogger(PantallaLogIn.class.getName()).log(Level.SEVERE, null, ex1);
-            }
+        } catch (Exception ex) {
+            control.mostrarErrorLogIn();
         }
     }//GEN-LAST:event_btnAceptarActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        control.openFormPaginaPrincipal();
+        dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -158,6 +173,7 @@ public class PantallaLogIn extends javax.swing.JFrame {
     private javax.swing.JLabel idLabel;
     private javax.swing.JTextField idTxt;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel logInLabel;
     // End of variables declaration//GEN-END:variables

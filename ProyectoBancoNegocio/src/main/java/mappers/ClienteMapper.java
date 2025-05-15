@@ -20,8 +20,10 @@ public class ClienteMapper {
     }
     
     public static ClienteDTO toDTO(Cliente cliente){
-        return new ClienteDTO(cliente.getId(),cliente.getNombre(), cliente.getApellidoPaterno(), cliente.getApellidoMaterno(), cliente.getColonia()
+        ClienteDTO clienteNuevo =  new ClienteDTO(cliente.getId(),cliente.getNombre(), cliente.getApellidoPaterno(), cliente.getApellidoMaterno(), cliente.getColonia()
                 , cliente.getCalle(), cliente.getCiudad(), cliente.getCodigoPostal(), cliente.getEstado(), cliente.getFechaNacimiento(),cliente.getEdad());
+        clienteNuevo.setContrasenia(cliente.getContrasenia());
+        return clienteNuevo;
     }
     
     public static List<Cliente> listToEntity(List<ClienteDTO> clientes){

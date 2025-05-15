@@ -70,6 +70,7 @@ public class CrearCuenta extends javax.swing.JFrame {
         labelCiudad = new javax.swing.JLabel();
         estadoComboBox = new javax.swing.JComboBox<>();
         crearCuentaBtn = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -128,6 +129,13 @@ public class CrearCuenta extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setText("Regresar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -141,7 +149,9 @@ public class CrearCuenta extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(287, 287, 287)
+                        .addGap(24, 24, 24)
+                        .addComponent(jButton1)
+                        .addGap(188, 188, 188)
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -195,7 +205,9 @@ public class CrearCuenta extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(33, 33, 33)
-                .addComponent(jLabel1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(jButton1))
                 .addGap(37, 37, 37)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(apellidoPLabel)
@@ -248,6 +260,7 @@ public class CrearCuenta extends javax.swing.JFrame {
 
     private void crearCuentaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearCuentaBtnActionPerformed
         // TODO add your handling code here:
+        try {        
         String nombre = nombreTxt.getText();
         String apellidoPaterno = apellidoPTxt.getText();
         String apellidoMaterno = apellidoMTxt.getText();
@@ -259,16 +272,19 @@ public class CrearCuenta extends javax.swing.JFrame {
         java.util.Date fechaNaci = (java.util.Date)datePicker.getModel().getValue();
         Date fechaNacimiento = new java.sql.Date(fechaNaci.getTime());
         ClienteDTO cliente = new ClienteDTO(nombre, apellidoPaterno, apellidoMaterno, colonia, calle, ciudad, codigoPostal, estado, fechaNacimiento);
-        try {
-            control.agregarCliente(cliente);
-        } catch (PresentacionException ex) {
-            try {
-                throw new PresentacionException("Error al agregar el cliente en la base de datos", ex);
-            } catch (PresentacionException ex1) {
-                Logger.getLogger(CrearCuenta.class.getName()).log(Level.SEVERE, null, ex1);
-            }
+            ClienteDTO clienteAgregado = control.agregarCliente(cliente);
+            control.mostrarMensajeCuentaCreadaExitosamente(clienteAgregado);
+            dispose();
+        } catch (Exception e) {
+            control.mostrarErrorCrearCuenta();
         }
     }//GEN-LAST:event_crearCuentaBtnActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        control.openFormPantallaUsuarioSinCuenta();
+        dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -284,6 +300,7 @@ public class CrearCuenta extends javax.swing.JFrame {
     private javax.swing.JButton crearCuentaBtn;
     private javax.swing.JComboBox<String> estadoComboBox;
     private javax.swing.JLabel fechaNacimientoLabel;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel labelCalle2;

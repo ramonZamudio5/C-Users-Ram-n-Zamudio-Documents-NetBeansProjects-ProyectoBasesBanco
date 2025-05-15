@@ -91,6 +91,36 @@ public class CuentaDAO implements ICuentaDAO{
     
     @Override
     public List<Cuenta> obtenerTodasLasCuentas(int idCliente) throws PersistenciaException {
+        String consultaSQL = "SELECT * FROM Cuenta WHERE id_cliente = ? and estado = 'ACTIVA'";
+        List<Cuenta> cuentas = new ArrayList<>();
+
+        try (Connection con = conexion.crearConexion();
+             PreparedStatement ps = con.prepareStatement(consultaSQL)) {
+
+            ps.setInt(1, idCliente);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Cuenta cuenta = new Cuenta();
+                    cuenta.setId(rs.getInt("id_cuenta"));
+                    cuenta.setFechaApertura(rs.getDate("fecha_apertura"));
+                    cuenta.setSaldo(rs.getDouble("saldo"));
+                    cuenta.setEstado(EstadoCuenta.valueOf(rs.getString("estado")));
+                    cuenta.setIdCliente(rs.getInt("id_cliente"));
+
+                    cuentas.add(cuenta);
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new PersistenciaException("Error al consultar todas las cuentas del cliente", e);
+        }
+
+        return cuentas;
+    }
+    
+    @Override
+    public List<Cuenta> obtenerTodasLasCuentasSinImporarEstado(int idCliente) throws PersistenciaException {
         String consultaSQL = "SELECT * FROM Cuenta WHERE id_cliente = ?";
         List<Cuenta> cuentas = new ArrayList<>();
 

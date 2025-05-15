@@ -19,4 +19,5 @@ public interface IClienteDAO {
     public Cliente obtenerClientePorId(int idCliente) throws PersistenciaException;
     public boolean existeCliente(String nombre, String apellidoPaterno, String apellidoMaterno, Date fechaNacimiento) throws PersistenciaException;
     public boolean validarCliente(int id, int contrasenia) throws PersistenciaException;
+    
 }

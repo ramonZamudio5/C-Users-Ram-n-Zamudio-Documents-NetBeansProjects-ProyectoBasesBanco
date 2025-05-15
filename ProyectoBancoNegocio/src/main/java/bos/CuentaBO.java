@@ -80,9 +80,15 @@ public class CuentaBO implements ICuentaBO{
         }
     } 
     @Override
-    public boolean editarEstadoCuenta(int idCuenta, EstadoCuenta nuevoEstado) throws NegocioException{
+    public boolean editarEstadoCuenta(int idCuenta, String nuevoEstado) throws NegocioException{
         if (nuevoEstado == null) {
             throw new NegocioException("El nuevo estado no puede ser nulo.");
+        }
+        EstadoCuenta enumEstado;
+        if(nuevoEstado.equals("ACTIVA")){
+            enumEstado = EstadoCuenta.ACTIVA;
+        }else{
+            enumEstado = EstadoCuenta.CANCELADO;
         }
         try{
             Cuenta cuenta = cuentaDAO.consultarCuentaPorId(idCuenta);
@@ -90,12 +96,24 @@ public class CuentaBO implements ICuentaBO{
                 throw new NegocioException("La cuenta no existe.");
             }
 
-            if (cuenta.getEstado() == nuevoEstado) {
+            if (cuenta.getEstado() == enumEstado) {
                 throw new NegocioException("La cuenta ya tiene el estado especificado.");
             }
-            return cuentaDAO.editarEstadoCuenta(idCuenta, nuevoEstado);
+            return cuentaDAO.editarEstadoCuenta(idCuenta, enumEstado);
         }catch(PersistenciaException e){
             throw new NegocioException("Error al editar estado de cuenta", e);
+        }
+    }
+
+    @Override
+    public List<CuentaDTO> obtenerTodasLasCuentasSinImporarEstado(int idCliente) throws NegocioException {
+        if(idCliente <= 0){
+            throw new NegocioException("El id no puede ser menor a 0");
+        }
+        try{
+            return CuentaMapper.listToDTO(cuentaDAO.obtenerTodasLasCuentasSinImporarEstado(idCliente));
+        }catch(PersistenciaException e){
+            throw new NegocioException("Error al consultar con la base de datos", e);
         }
     }
 }

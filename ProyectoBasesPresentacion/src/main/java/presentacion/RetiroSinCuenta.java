@@ -35,6 +35,7 @@ public class RetiroSinCuenta extends javax.swing.JFrame {
         contraseniaLabel = new javax.swing.JLabel();
         contraseniaTxt = new javax.swing.JTextField();
         btnRetirar = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -58,16 +59,20 @@ public class RetiroSinCuenta extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setText("Regresar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(230, Short.MAX_VALUE)
+                .addContainerGap(295, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(203, 203, 203))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(folioLabel)
                         .addGap(361, 361, 361))
@@ -82,12 +87,23 @@ public class RetiroSinCuenta extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(btnRetirar, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(298, 298, 298))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(203, 203, 203))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(47, 47, 47)
-                .addComponent(jLabel1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(47, 47, 47)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addComponent(jButton1)))
                 .addGap(39, 39, 39)
                 .addComponent(folioLabel)
                 .addGap(18, 18, 18)
@@ -108,14 +124,19 @@ public class RetiroSinCuenta extends javax.swing.JFrame {
         String folioTexto = folioTxt.getText();
         try{
             int folio = Integer.parseInt(folioTexto);
-            System.out.println(control.realizarRetiro(folio, contraseniaTxt.getText()));
+            control.realizarRetiro(folio, contraseniaTxt.getText());
+            control.mostrarMensajeRetiroExitoso();
+            dispose();
         }catch(PresentacionException e){
-            try {
-                throw new PresentacionException("hubo un error al realizar el retiro", e);
-            }catch (PresentacionException ex) {
-            }
+            control.mostrarErrorRetiro();
         }
     }//GEN-LAST:event_btnRetirarActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        control.openFormPantallaUsuarioSinCuenta();
+        dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
 
@@ -125,6 +146,7 @@ public class RetiroSinCuenta extends javax.swing.JFrame {
     private javax.swing.JTextField contraseniaTxt;
     private javax.swing.JLabel folioLabel;
     private javax.swing.JTextField folioTxt;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }

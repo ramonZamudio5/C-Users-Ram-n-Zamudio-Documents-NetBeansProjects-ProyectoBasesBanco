@@ -19,4 +19,5 @@ public interface ICuentaDAO {
     public Cuenta consultarCuentaPorId(int id) throws PersistenciaException;
     public List<Cuenta> obtenerTodasLasCuentas(int idCliente) throws PersistenciaException ;
     public boolean editarEstadoCuenta(int idCuenta, EstadoCuenta nuevoEstado) throws PersistenciaException;
+    public List<Cuenta> obtenerTodasLasCuentasSinImporarEstado(int idCliente) throws PersistenciaException ;
 }
