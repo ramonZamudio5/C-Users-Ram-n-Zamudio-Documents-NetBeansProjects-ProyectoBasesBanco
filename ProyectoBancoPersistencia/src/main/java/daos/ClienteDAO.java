@@ -1,4 +1,4 @@
-/*
+ /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
@@ -19,16 +19,25 @@ import java.util.List;
 import java.util.Random;
 
 /**
- *
+ * Clase que implementa la interfaz IClienteDAO para realizar operaciones de persistencia
+ * relacionadas con la entidad Cliente
  * @author Ramón Zamudio
  */
 public class ClienteDAO implements IClienteDAO{
     IConexion conexion;
-
+    /**
+     * Constructor que recibe una implementación de IConexion para la gestión de conexiones a la base de datos
+     * @param conexion Objeto que permite crear conexiones a la base de datos
+     */
     public ClienteDAO(IConexion conexion) {
         this.conexion = conexion;
     }
-    
+    /**
+     * Agrega un nuevo cliente a la base de datos, generando automáticamente una contraseña.
+     * @param cliente cliente Objeto Cliente con la información a guardar.
+     * @return Cliente con su ID y contraseña generada asignados.
+     * @throws PersistenciaException Si ocurre un error al insertar el cliente.
+     */
     @Override
     public Cliente agregarCliente(Cliente cliente) throws PersistenciaException {
         int contraseniaGenerada = generarContraseniaAleatoria();
@@ -68,13 +77,20 @@ public class ClienteDAO implements IClienteDAO{
             throw new PersistenciaException("La creación del cliente falló", e);
         }
     }
-    
+    /**
+     * Genera una contraseña aleatoria de 8 dígitos para el cliente
+     * @return Número entero que representa la contraseña
+     */
     private int generarContraseniaAleatoria() {
         Random random = new Random();
         int numero = 10000000 + random.nextInt(90000000);
         return numero;
     }
-    
+    /**
+     * Obtiene una lista con todos los clientes almacenados en la base de datos.
+     * @return Lista de objetos Cliente
+     * @throws PersistenciaException Si ocurre un error al consultar los clientes.
+     */
     @Override
     public List<Cliente> obtenerTodosLosClientes() throws PersistenciaException {
         String consultaSQL = "SELECT id_cliente, nombre, apellidoPaterno, apellidoMaterno, calle, colonia, codigoPostal, estado, ciudad, fecha_nacimiento, TIMESTAMPDIFF(YEAR, fecha_nacimiento, CURDATE()) AS edad FROM cliente";
@@ -107,7 +123,12 @@ public class ClienteDAO implements IClienteDAO{
 
         return clientes;
     }
-
+    /**
+     * Obtiene un cliente a partir de su ID.
+     * @param idCliente Identificador único del cliente.
+     * @return si se encuentra
+     * @throws PersistenciaException Si ocurre un error al consultar el cliente.
+     */
     @Override
     public Cliente obtenerClientePorId(int idCliente) throws PersistenciaException {
         String consultaSQL = "SELECT id_cliente, nombre, apellidoPaterno, apellidoMaterno, calle, colonia, codigoPostal, estado, ciudad, fecha_nacimiento, TIMESTAMPDIFF(YEAR, fecha_nacimiento, CURDATE()) AS edad FROM cliente WHERE id_cliente = ?";
@@ -143,7 +164,15 @@ public class ClienteDAO implements IClienteDAO{
 
         return cliente;
     }
-    
+    /**
+     * Verifica si ya existe un cliente en la base de datos con los datos proporcionados.
+     * @param nombre Nombre del cliente.
+     * @param apellidoPaterno Apellido paterno del cliente.
+     * @param apellidoMaterno Apellido materno del cliente.
+     * @param fechaNacimiento Fecha de nacimiento del cliente.
+     * @return true si el cliente existe, false si no.
+     * @throws PersistenciaException Si ocurre un error durante la consulta.
+     */
     @Override
     public boolean existeCliente(String nombre, String apellidoPaterno, String apellidoMaterno, Date fechaNacimiento) throws PersistenciaException {
         String sql = "SELECT COUNT(*) FROM cliente WHERE nombre = ? AND apellidoPaterno = ? AND apellidoMaterno = ? AND fecha_nacimiento = ?";
@@ -169,7 +198,13 @@ public class ClienteDAO implements IClienteDAO{
 
         return false;
     }
-    
+    /**
+     * Valida las credenciales de un cliente mediante su ID y contraseña.
+     * @param id ID del cliente.
+     * @param contrasenia Contraseña generada del cliente.
+     * @return true si las credenciales son válidas, false en caso contrario.
+     * @throws PersistenciaException Si ocurre un error durante la consulta.
+     */
     @Override
     public boolean validarCliente(int id, int contrasenia) throws PersistenciaException {
         String sql = "SELECT COUNT(*) FROM cliente WHERE id_cliente = ? AND contrasenia = ?";

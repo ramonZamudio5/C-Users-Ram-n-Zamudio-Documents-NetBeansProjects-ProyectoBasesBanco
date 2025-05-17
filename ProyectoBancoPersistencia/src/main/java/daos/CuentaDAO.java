@@ -19,16 +19,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ * Implementación de la interfaz ICuentaDAO que proporciona operaciones
+ * para gestionar las cuentas bancarias en la base de datos.
  * @author Ramón Zamudio
  */
 public class CuentaDAO implements ICuentaDAO{
     IConexion conexion;
-
+    /**
+     * Constructor que inicializa el DAO con una conexión a la base de datos.
+     * 
+     * @param conexion La interfaz de conexión a utilizar.
+     */
     public CuentaDAO(IConexion conexion) {
         this.conexion = conexion;
     }
-
+    /**
+     * Agrega una nueva cuenta para un cliente en la base de datos.
+     * 
+     * @param cuenta La cuenta a agregar.
+     * @return La cuenta con su ID generado.
+     * @throws PersistenciaException Si ocurre un error durante la inserción o el cliente no existe.
+     */
     @Override
     public Cuenta agregarCuenta(Cuenta cuenta) throws PersistenciaException {
         Cliente cliente = obtenerClientePorId(cuenta.getIdCliente());
@@ -62,7 +73,13 @@ public class CuentaDAO implements ICuentaDAO{
             throw new PersistenciaException("Error al insertar la cuenta", e);
         }
     }
-    
+    /**
+     * Consulta una cuenta por su identificador.
+     * 
+     * @param id El ID de la cuenta.
+     * @return La cuenta encontrada o null si no existe.
+     * @throws PersistenciaException Si ocurre un error al realizar la consulta.
+     */
     @Override
     public Cuenta consultarCuentaPorId(int id) throws PersistenciaException {
         String consultaSQL = "SELECT * FROM Cuenta WHERE id_cuenta = ?";
@@ -88,7 +105,13 @@ public class CuentaDAO implements ICuentaDAO{
         }
         return null;
     }
-    
+     /**
+     * Obtiene todas las cuentas activas de un cliente específico.
+     * 
+     * @param idCliente El ID del cliente.
+     * @return Lista de cuentas activas del cliente.
+     * @throws PersistenciaException Si ocurre un error al realizar la consulta.
+     */
     @Override
     public List<Cuenta> obtenerTodasLasCuentas(int idCliente) throws PersistenciaException {
         String consultaSQL = "SELECT * FROM Cuenta WHERE id_cliente = ? and estado = 'ACTIVA'";
@@ -118,7 +141,13 @@ public class CuentaDAO implements ICuentaDAO{
 
         return cuentas;
     }
-    
+     /**
+     * Obtiene todas las cuentas de un cliente, sin importar el estado.
+     * 
+     * @param idCliente El ID del cliente.
+     * @return Lista de todas las cuentas del cliente.
+     * @throws PersistenciaException Si ocurre un error al realizar la consulta.
+     */
     @Override
     public List<Cuenta> obtenerTodasLasCuentasSinImporarEstado(int idCliente) throws PersistenciaException {
         String consultaSQL = "SELECT * FROM Cuenta WHERE id_cliente = ?";
@@ -148,7 +177,14 @@ public class CuentaDAO implements ICuentaDAO{
 
         return cuentas;
     }
-    
+    /**
+     * Edita el estado de una cuenta (por ejemplo: ACTIVA, INACTIVA).
+     * 
+     * @param idCuenta El ID de la cuenta a modificar.
+     * @param nuevoEstado El nuevo estado a establecer.
+     * @return true si la operación fue exitosa.
+     * @throws PersistenciaException Si ocurre un error al actualizar.
+     */
     @Override
     public boolean editarEstadoCuenta(int idCuenta, EstadoCuenta nuevoEstado) throws PersistenciaException {
         String consultaSQL = "UPDATE Cuenta SET estado = ? WHERE id_cuenta = ?";
@@ -167,7 +203,13 @@ public class CuentaDAO implements ICuentaDAO{
             throw new PersistenciaException("Error al actualizar el estado de la cuenta", e);
         }
     }
-    
+    /**
+     * Consulta los datos de un cliente por su ID.
+     * 
+     * @param idCliente El ID del cliente.
+     * @return El cliente correspondiente o null si no existe.
+     * @throws PersistenciaException Si ocurre un error al consultar.
+     */
     public Cliente obtenerClientePorId(int idCliente) throws PersistenciaException {
         String consultaSQL = "SELECT id_cliente, nombre, apellidoPaterno, apellidoMaterno, calle, colonia, codigoPostal, estado, ciudad, fecha_nacimiento, TIMESTAMPDIFF(YEAR, fecha_nacimiento, CURDATE()) AS edad FROM cliente WHERE id_cliente = ?";
         Cliente cliente = null;

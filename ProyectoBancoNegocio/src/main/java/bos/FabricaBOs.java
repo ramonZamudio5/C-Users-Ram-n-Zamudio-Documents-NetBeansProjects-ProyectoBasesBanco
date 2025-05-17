@@ -12,29 +12,51 @@ import interfaces.IRetiroSinCuentaBO;
 import interfaces.ITransferenciaBO;
 
 /**
- *
+ * Clase de utilidad que implementa el patrón Factory (Fábrica).
+ * Provee instancias de objetos de negocio (BO) para ser utilizados en la capa de aplicación.
+ * Cada método genera una nueva instancia del BO correspondiente junto con su conexión asociada.
+ * 
  * @author Ramón Zamudio
  */
 public class FabricaBOs {
-    public static IClienteBO getInstanceClienteBO(){
+
+    /**
+     * Crea una nueva instancia de IClienteBO con su respectiva conexión.
+     * 
+     * @return Una implementación de {@link IClienteBO}.
+     */
+    public static IClienteBO getInstanceClienteBO() {
         IConexion conexion = new Conexion();
-        IClienteBO clienteBO = new ClienteBO(conexion);
-        return clienteBO;
+        return new ClienteBO(conexion);
     }
-    public static ICuentaBO getInstanceCuentaBO(){
+
+    /**
+     * Crea una nueva instancia de ICuentaBO con su respectiva conexión.
+     * 
+     * @return Una implementación de {@link ICuentaBO}.
+     */
+    public static ICuentaBO getInstanceCuentaBO() {
         IConexion conexion = new Conexion();
-        ICuentaBO cuentaBO = new CuentaBO(conexion);
-        return cuentaBO;
+        return new CuentaBO(conexion);
     }
-    public static IRetiroSinCuentaBO getInstanceRetiroSinCuentaBO(){
+
+    /**
+     * Crea una nueva instancia de IRetiroSinCuentaBO con su respectiva conexión.
+     * 
+     * @return Una implementación de {@link IRetiroSinCuentaBO}.
+     */
+    public static IRetiroSinCuentaBO getInstanceRetiroSinCuentaBO() {
         IConexion conexion = new Conexion();
-        IRetiroSinCuentaBO retiroSinCuentaBO = new RetiroSinCuentaBO(conexion);
-        return retiroSinCuentaBO;
+        return new RetiroSinCuentaBO(conexion);
     }
-    public static ITransferenciaBO getInstanceTransferenciaBO(){
+
+    /**
+     * Crea una nueva instancia de ITransferenciaBO con su respectiva conexión.
+     * 
+     * @return Una implementación de {@link ITransferenciaBO}.
+     */
+    public static ITransferenciaBO getInstanceTransferenciaBO() {
         IConexion conexion = new Conexion();
-        ITransferenciaBO transferenciaBO = new TransferenciaBO(conexion);
-        return transferenciaBO;
+        return new TransferenciaBO(conexion);
     }
-    
 }
